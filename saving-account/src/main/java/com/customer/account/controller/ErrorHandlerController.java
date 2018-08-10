@@ -22,20 +22,12 @@ public class ErrorHandlerController extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@ExceptionHandler(RuntimeException.class)
+	/*@ExceptionHandler(RuntimeException.class)
 	public ResponseEntity<ExceptionResponse> businessValidationExceptionHandler(RestClientException clientException){
 		ExceptionResponse exceptionResponse = new ExceptionResponse();
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	/*@ExceptionHandler(MethodNotAllowedException.class)
-    public ResponseEntity<Object> handleError405(HttpServletRequest request, Exception e) {
-		ExecutionException executionException = new ExecutionException(HttpStatus.METHOD_NOT_ALLOWED.value(),"Method Not allowed");
-		ApiException apiException = new ApiException(executionException.getErrorCode(), "Execution Exception",
-				executionException.getMessage());
-		return new ResponseEntity<Object>(apiException, HttpStatus.resolve(executionException.getErrorCode()));
-    }*/
-	
+	}*/
+		
 	@ExceptionHandler({ ExecutionException.class })
 	public ResponseEntity<Object> handleExecutionException(Exception exception, WebRequest request) {
 		ExecutionException executionException = (ExecutionException) exception;
@@ -51,9 +43,4 @@ public class ErrorHandlerController extends ResponseEntityExceptionHandler {
 				validationException.getMessage());
 		return new ResponseEntity<Object>(apiException, HttpStatus.BAD_REQUEST);
 	}
-	
-	/*@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<ExceptionResponseHandler> executionExceptionHandler(RestClientException clientException){
-		return null;
-	}*/
 }

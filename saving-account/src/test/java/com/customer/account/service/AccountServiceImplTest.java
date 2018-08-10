@@ -30,7 +30,7 @@ public class AccountServiceImplTest {
 	private CustomCustomerRepository customCustomerRepository;
 	
 	@Mock
-	private DataValidatorService dataValidator;
+	private DataValidatorServiceImpl dataValidator;
 	
 	@Test
 	public void createTest() {
@@ -175,7 +175,7 @@ public class AccountServiceImplTest {
 		List<CustomerDetails> customerList = new ArrayList<>();
 		customerList.add(customerDetails);
 		Mockito.when(customCustomerRepository.retriveAllCustomer()).thenReturn(customerList);
-		List<CustomerDetails> response = accountServiceImpl.retriveAll();
+		Object response = accountServiceImpl.retriveAll();
 		Assert.assertNotNull(response);
 	}
 	
@@ -183,7 +183,7 @@ public class AccountServiceImplTest {
 	public void retriveAllException() {
 		List<CustomerDetails> customerList = new ArrayList<>();
 		Mockito.when(customCustomerRepository.retriveAllCustomer()).thenReturn(customerList);
-		List<CustomerDetails> response = accountServiceImpl.retriveAll();
+		Object response = (Object)accountServiceImpl.retriveAll();
 		Assert.assertNotNull(response);
 	}
 	

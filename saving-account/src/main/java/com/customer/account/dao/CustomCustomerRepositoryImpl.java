@@ -29,16 +29,14 @@ public class CustomCustomerRepositoryImpl implements CustomCustomerRepository {
 		Root<CustomerDetails> customerRoot = customerQuery.from(CustomerDetails.class);
 		Predicate p1 = builder.and(builder.equal(customerRoot.get("isActive"), "true"));
 		Predicate p2 = builder.and(builder.equal(customerRoot.get("customerId"), customerId));
-		List<Predicate> predList = new LinkedList<Predicate>();
+		List<Predicate> predList = new LinkedList<>();
 		predList.add(p1);
 		predList.add(p2);
 		Predicate[] predArray = new Predicate[predList.size()];
 		predList.toArray(predArray);
 		customerQuery.where(predArray);
-		
 		TypedQuery<CustomerDetails> query = entityManager.createQuery(customerQuery);
-		List<CustomerDetails> results = query.getResultList();
-		return results;
+		return query.getResultList();
 	}
 
 	@Override
@@ -50,8 +48,7 @@ public class CustomCustomerRepositoryImpl implements CustomCustomerRepository {
 		customerQuery.select(customerRoot).where(builder.equal(customerRoot.get("isActive"), activeFlag));
 		TypedQuery<CustomerDetails> query = entityManager.createQuery(customerQuery);
 		query.setParameter(activeFlag, "true");
-		List<CustomerDetails> results = query.getResultList();
-		return results;
+		return query.getResultList();
 	}
 
 }

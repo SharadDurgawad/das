@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +41,7 @@ public class CustomerController {
 		responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 		CustomerDetails details = (CustomerDetails) accountService.create(customerDetails);
 		logger.debug("createCustomer :: End");
-		return new ResponseEntity<CustomerDetails>(details, responseHeaders,HttpStatus.CREATED);
+		return new ResponseEntity<>(details, responseHeaders,HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/{customerId}")
@@ -49,11 +50,12 @@ public class CustomerController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("MyResponseHeader", "MyValue");
 		CustomerDetails customerDetails = (CustomerDetails) accountService.retrive(customerId);
-		if(ObjectUtils.isEmpty(customerDetails))
+		if(ObjectUtils.isEmpty(customerDetails) || StringUtils.isEmpty(customerDetails.getAccountNumber())) {
 		throw new ExecutionException(HttpStatus.NOT_FOUND.value(),
 				"Customer " + customerId + " not found in the system");
+		}
 		logger.debug("getCustomer :: End");
-		return new ResponseEntity<CustomerDetails>(customerDetails, responseHeaders,HttpStatus.OK);
+		return new ResponseEntity<>(customerDetails, responseHeaders,HttpStatus.OK);
 		
 	}
 
@@ -62,10 +64,9 @@ public class CustomerController {
 		logger.debug("getAllCustomerDetails :: Start");
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.set("MyResponseHeader", "MyValue");
-		@SuppressWarnings("unchecked")
-		List<CustomerDetails> customerDetailsList = (List<CustomerDetails>) accountService.retriveAll();
+		List<CustomerDetails> customerDetailsList = accountService.retriveAll();
 		logger.debug("getAllCustomerDetails :: End");
-		return new ResponseEntity<List<CustomerDetails>>(customerDetailsList, responseHeaders,HttpStatus.OK);
+		return new ResponseEntity<>(customerDetailsList, responseHeaders,HttpStatus.OK);
 	}
 
 	@PutMapping(value = "/{customerId}")
@@ -75,7 +76,7 @@ public class CustomerController {
 		responseHeaders.set("MyResponseHeader", "MyValue");
 		CustomerDetails details = (CustomerDetails) accountService.update(customerDetails,customerId);
 		logger.debug("updateCustomer :: End");
-		return new ResponseEntity<CustomerDetails>(details, responseHeaders,HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(details, responseHeaders,HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping(value = "/{customerId}")
@@ -85,6 +86,6 @@ public class CustomerController {
 		responseHeaders.set("MyResponseHeader", "MyValue");
 		CustomerDetails customerDetails = (CustomerDetails) accountService.remove(customerId);
 		logger.debug("removeCustomer :: End");
-		return new ResponseEntity<CustomerDetails>(customerDetails, responseHeaders,HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(customerDetails, responseHeaders,HttpStatus.NO_CONTENT);
 	}
 }

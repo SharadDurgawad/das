@@ -12,17 +12,17 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.customer.account.exceptions.ValidationException;
+import com.customer.account.helper.CustomerValidatorHelper;
 import com.customer.account.model.AddressDetails;
 import com.customer.account.model.CustomerDetails;
-import com.customer.account.validator.CustomerValidator;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
-public class DataValidatorServiceTest {
+public class DataValidatorServiceImplTest {
 	
 	@InjectMocks
-	private DataValidatorService dataValidatorService;
+	private DataValidatorServiceImpl dataValidatorService;
 	@Mock
-	private CustomerValidator customerValidator;
+	private CustomerValidatorHelper customerValidator;
 
 	@Test
 	public void isDataValidForCreateTest() {

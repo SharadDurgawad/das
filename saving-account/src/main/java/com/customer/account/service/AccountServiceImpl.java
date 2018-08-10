@@ -1,6 +1,5 @@
 package com.customer.account.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
 	private CustomCustomerRepository customCustomerRepository;
 	
 	@Autowired
-	private DataValidatorService dataValidator;
+	private DataValidatorServiceImpl dataValidator;
 	
 	@Override
 	public CustomerDetails create(Object object) {
@@ -69,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
 		customerDetails.setCustomerId(accountDetails.getCustomerId());
 		customerDetails.getAddressDetails().setCustomerId(accountDetails.getCustomerId());
 		customerDetails.setIsActive(String.valueOf(Boolean.TRUE));
-		customerDetails.setGender(String.valueOf(customerDetails.getGender().toString()));
+		customerDetails.setGender(String.valueOf(customerDetails.getGender()));
 	}
 	
 	private void generateAccountDetails(CustomerDetails customerDetails,AccountDetails accountDetails) {
@@ -115,7 +114,7 @@ public class AccountServiceImpl implements AccountService {
 	public CustomerDetails retrive(Object object) {
 		logger.debug("retrive::Start");
 		String customerId = (String) object;
-		List<CustomerDetails> customerDetailsList = new ArrayList<>();
+		List<CustomerDetails> customerDetailsList;
 		if (customerRepository.existsById(customerId)) {
 			customerDetailsList = customCustomerRepository.retriveCustomer(customerId);
 		}else {
@@ -129,8 +128,8 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public List<CustomerDetails> retriveAll() {
 		logger.debug("retriveAll::Start");
-		List<CustomerDetails> customerDetailsList = new ArrayList<>();
-		customerDetailsList = (List<CustomerDetails>) customCustomerRepository.retriveAllCustomer();
+		List<CustomerDetails> customerDetailsList ;
+		customerDetailsList = customCustomerRepository.retriveAllCustomer();
 		if (!CollectionUtils.isEmpty(customerDetailsList)) {
 			logger.debug("retriveAll::End");
 			return customerDetailsList;

@@ -1,10 +1,11 @@
-package com.customer.account.validator;
+package com.customer.account.helper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import com.customer.account.model.AddressDetails;
@@ -12,13 +13,10 @@ import com.customer.account.model.CustomerDetails;
 import com.customer.account.utility.ApplicationConstants;
 import com.customer.account.utility.DateUtil;
 
-public class CustomerValidator {
+@Component
+public class CustomerValidatorHelper {
 
-	private List<String> validationErrors;
-
-	public CustomerValidator() {
-		validationErrors = new ArrayList<String>();
-	}
+	private List<String> validationErrors = new ArrayList<>();
 
 	public List<String> isCustomerValidForCreate(CustomerDetails customer) {
 		validateFirstName(customer.getCustFirstName());
@@ -32,7 +30,7 @@ public class CustomerValidator {
 		return validationErrors;
 
 	}
-	
+
 	public List<String> isIdValidForCreate(CustomerDetails customer) {
 		validateAccountNumber(customer.getAccountNumber());
 		validateCustomerId(customer.getCustomerId());
@@ -40,19 +38,18 @@ public class CustomerValidator {
 		return validationErrors;
 
 	}
-	
+
 	private void validateCustomerId(String customerId) {
-		if((null == customerId  && ObjectUtils.isEmpty(customerId))) {
+		if ((null == customerId && ObjectUtils.isEmpty(customerId))) {
 			validationErrors.add("Account Number" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
 		}
-}
-	
+	}
 
 	private void validateUniqueId(String uniqueId) {
-		if(null == uniqueId && ObjectUtils.isEmpty(uniqueId)) {
+		if (null == uniqueId && ObjectUtils.isEmpty(uniqueId)) {
 			validationErrors.add("uniqueId" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
 		}
-}
+	}
 
 	public List<String> isCustomerValidForUpdate(CustomerDetails customer) {
 		validateAccountNumber(customer.getAccountNumber());
@@ -170,7 +167,7 @@ public class CustomerValidator {
 	private void validateDOB(String date) {
 		if (date == null) {
 			validationErrors.add("dob" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
-		}else if(StringUtils.isEmpty(DateUtil.getValidDateString(date))) {
+		} else if (StringUtils.isEmpty(DateUtil.getValidDateString(date))) {
 			validationErrors.add("dob : " + ApplicationConstants.INVALID_DOB_ERROR);
 		}
 	}
