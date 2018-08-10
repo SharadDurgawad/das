@@ -18,10 +18,10 @@ import com.customer.account.model.AddressDetails;
 import com.customer.account.model.CustomerDetails;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
-public class AccountServiceImplTest {
+public class CustomerServiceImplTest {
 	
 	@InjectMocks
-	private AccountServiceImpl accountServiceImpl;
+	private CustomerServiceImpl accountServiceImpl;
 	
 	@Mock
 	private CustomerRepository customerRepository;

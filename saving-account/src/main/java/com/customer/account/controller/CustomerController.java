@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.customer.account.exceptions.ExecutionException;
 import com.customer.account.model.CustomerDetails;
-import com.customer.account.service.AccountService;
+import com.customer.account.service.CustomerService;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -31,7 +31,7 @@ public class CustomerController {
 	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
 	@Autowired
-	private AccountService accountService;
+	private CustomerService accountService;
 	
 	@PostMapping
 	public ResponseEntity<CustomerDetails> createCustomer(@RequestBody CustomerDetails customerDetails) {

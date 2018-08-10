@@ -21,9 +21,9 @@ import com.customer.account.utility.ApplicationConstants;
 
 @Service
 @Transactional
-public class AccountServiceImpl implements AccountService {
+public class CustomerServiceImpl implements CustomerService {
 
-	private final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
+	private final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 	
 	@Autowired
 	private CustomerRepository customerRepository;
