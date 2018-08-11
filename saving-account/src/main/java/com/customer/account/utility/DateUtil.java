@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 public class DateUtil {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DateUtil.class);
+	
+	private DateUtil() {		
+	}
 
 	public static String getValidDateString(String dateOfBirth) {
 		logger.debug("getValidDateString::Start");

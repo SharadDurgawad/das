@@ -21,13 +21,6 @@ public class CustomerDetails implements Serializable {
 	 */
 	private static final long serialVersionUID = 3922777198804232084L;
 
-	/*@GeneratedValue(strategy)
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")*/
-	/*@GeneratedValue(strategy=GenerationType.AUTO)*/
-	/*@SequenceGenerator(name="customer_sequence", sequenceName="customer_sequence",allocationSize=1)
-	@Column(name = "customer_seq_no")
-	private Integer customerSeqId;*/
-
 	@Id
 	@Column(name = "customer_id", nullable = false, unique = true)
 	@JsonProperty("customerId")

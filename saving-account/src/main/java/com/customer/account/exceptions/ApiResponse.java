@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ApiException {
+public class ApiResponse {
 
 	@JsonProperty("status code")
 	private int statusCode;
@@ -19,23 +19,23 @@ public class ApiException {
 	@JsonProperty("detail message")
 	private String detailMessage;
 
-	public ApiException() {
+	public ApiResponse() {
 		this.timestamp = LocalDateTime.now();
 	}
 
-	public ApiException(int statusCode) {
+	public ApiResponse(int statusCode) {
 		this();
 		this.statusCode = statusCode;
 	}
 
-	public ApiException(int statusCode, String message, String detailMessage) {
+	public ApiResponse(int statusCode, String message, String detailMessage) {
 		this();
 		this.statusCode = statusCode;
 		this.message = message;
 		this.detailMessage = detailMessage;
 	}
 
-	public ApiException(int statusCode, String message) {
+	public ApiResponse(int statusCode, String message) {
 		this();
 		this.statusCode = statusCode;
 		this.message = message;
