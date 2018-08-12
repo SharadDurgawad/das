@@ -12,4 +12,6 @@ public interface ApplicationConstants {
 	
 	public final String INVALID_FIELD_MESSAGE = "All the fields are not valid :: {}";
 	public final String VALID_FIELD_MESSAGE = "All the fields are valid for customer ID {}.";
+	public final String CUSTOMER_MESSAGE = "Customer";
+	public final String SPACE = " ";
 }
