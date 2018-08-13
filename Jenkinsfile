@@ -18,7 +18,7 @@ pipeline {
 	stage('Docker Build') {
       agent any
       steps {
-        sh 'docker build -t sdurgawad/demomaven:latest .'
+        sh 'docker build -t sdurgawad/saving-account:latest .'
       }
     }
 	stage ('Docker Push') {
@@ -26,7 +26,7 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
 	  sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-	  sh 'docker push sdurgawad/demomaven:latest'
+	  sh 'docker push sdurgawad/saving-account:latest'
         }
       }
 	}
