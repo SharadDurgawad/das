@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.customer.account.model.CustomerDetails;
 
-public interface AccountService {
+public interface CustomerService {
 	public Object create(Object object);
 	public Object update(Object object,Object customerId);
 	public Object retrive(Object object);

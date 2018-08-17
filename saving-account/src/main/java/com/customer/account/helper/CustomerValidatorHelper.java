@@ -40,13 +40,13 @@ public class CustomerValidatorHelper {
 	}
 
 	private void validateCustomerId(String customerId) {
-		if ((null == customerId && ObjectUtils.isEmpty(customerId))) {
+		if ((ObjectUtils.isEmpty(customerId))) {
 			validationErrors.add("Account Number" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
 		}
 	}
 
 	private void validateUniqueId(String uniqueId) {
-		if (null == uniqueId && ObjectUtils.isEmpty(uniqueId)) {
+		if (ObjectUtils.isEmpty(uniqueId)) {
 			validationErrors.add("uniqueId" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
 		}
 	}
@@ -103,10 +103,8 @@ public class CustomerValidatorHelper {
 	}
 
 	private void validateSubdivision(String subdivision) {
-		if (StringUtils.isNotEmpty(subdivision)) {
-			if (!StringUtils.isAlpha(subdivision)) {
+		if (StringUtils.isNotEmpty(subdivision) && !StringUtils.isAlpha(subdivision)) {
 				validationErrors.add("Sub division" + ApplicationConstants.ALPHA_ERROR_MESSAGE);
-			}
 		}
 	}
 
@@ -157,10 +155,8 @@ public class CustomerValidatorHelper {
 	}
 
 	private void validateMiddleName(String custMiddleName) {
-		if (StringUtils.isNotEmpty(custMiddleName)) {
-			if (!StringUtils.isAlpha(custMiddleName)) {
+		if (StringUtils.isNotEmpty(custMiddleName) && !StringUtils.isAlpha(custMiddleName)) {
 				validationErrors.add("Middle name" + ApplicationConstants.ALPHA_ERROR_MESSAGE);
-			}
 		}
 	}
 

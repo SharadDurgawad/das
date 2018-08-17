@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.customer.account.exceptions.ValidationException;
 import com.customer.account.helper.CustomerValidatorHelper;
 import com.customer.account.model.CustomerDetails;
+import com.customer.account.utility.ApplicationConstants;
 
 /**
  * The class DataValidator validates the data has required information in

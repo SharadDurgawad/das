@@ -31,8 +31,8 @@ public class ApiResponseConstants implements Serializable {
 	public static final Integer METHOD_NOT_ALLOWED_CODE = 405;
 	public static final String NOT_ACCEPTIBLE = "Not Acceptible";
 	public static final Integer NOT_ACCEPTIBLE_CODE = 406;
-	public static final String PRECONDITIOn_FAILED = "PreCondition Failed";
-	public static final Integer PRECONDITIOn_FAILED_CODE = 412;
+	public static final String PRECONDITION_FAILED = "PreCondition Failed";
+	public static final Integer PRECONDITION_FAILED_CODE = 412;
 	public static final String UNSUPPORTED_MEDIA_TYPE = "Unsupported Media Type";
 	public static final Integer UNSUPPORTED_MEDIA_TYPE_CODE = 415;
 	public static final String INTERNAL_SERVER_ERROR = "Internal Server Error";

@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.customer.account.exceptions.ExecutionException;
 import com.customer.account.model.CustomerDetails;
-import com.customer.account.service.AccountService;
+import com.customer.account.service.CustomerService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerControllerTest {
@@ -23,7 +23,7 @@ public class CustomerControllerTest {
 	private CustomerController customerController;
 	
 	@Mock
-	private AccountService accountService;
+	private CustomerService accountService;
 	
 	@Test
 	public void createCustomerTest() {
