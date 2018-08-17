@@ -29,6 +29,8 @@ import com.customer.account.service.AccountService;
 public class CustomerController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+	private final static String HDR_KEY = "MyResponseHeader";
+	private final static String HDR_VAL = "MyValue";
 
 	@Autowired
 	private AccountService accountService;
@@ -37,7 +39,7 @@ public class CustomerController {
 	public ResponseEntity<CustomerDetails> createCustomer(@RequestBody CustomerDetails customerDetails) {
 		logger.debug("createCustomer :: Start");
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("MyResponseHeader", "MyValue");
+		responseHeaders.set(HDR_KEY, HDR_VAL);
 		responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 		CustomerDetails details = (CustomerDetails) accountService.create(customerDetails);
 		logger.debug("createCustomer :: End");
@@ -48,7 +50,7 @@ public class CustomerController {
 	public ResponseEntity<CustomerDetails> getCustomer(@PathVariable String customerId) {
 		logger.debug("getCustomer :: Start");
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("MyResponseHeader", "MyValue");
+		responseHeaders.set(HDR_KEY, HDR_VAL);
 		CustomerDetails customerDetails = (CustomerDetails) accountService.retrive(customerId);
 		if(ObjectUtils.isEmpty(customerDetails) || StringUtils.isEmpty(customerDetails.getAccountNumber())) {
 		throw new ExecutionException(HttpStatus.NOT_FOUND.value(),
@@ -63,7 +65,7 @@ public class CustomerController {
 	public ResponseEntity<List<CustomerDetails>> getAllCustomerDetails() {
 		logger.debug("getAllCustomerDetails :: Start");
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("MyResponseHeader", "MyValue");
+		responseHeaders.set(HDR_KEY, HDR_VAL);
 		List<CustomerDetails> customerDetailsList = accountService.retriveAll();
 		logger.debug("getAllCustomerDetails :: End");
 		return new ResponseEntity<>(customerDetailsList, responseHeaders,HttpStatus.OK);
@@ -73,7 +75,7 @@ public class CustomerController {
 	public ResponseEntity<CustomerDetails> updateCustomer(@RequestBody CustomerDetails customerDetails,@PathVariable String customerId) {
 		logger.debug("updateCustomer :: Start");
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("MyResponseHeader", "MyValue");
+		responseHeaders.set(HDR_KEY, HDR_VAL);
 		CustomerDetails details = (CustomerDetails) accountService.update(customerDetails,customerId);
 		logger.debug("updateCustomer :: End");
 		return new ResponseEntity<>(details, responseHeaders,HttpStatus.ACCEPTED);
@@ -83,7 +85,7 @@ public class CustomerController {
 	public ResponseEntity<CustomerDetails> removeCustomer(@PathVariable String customerId) {
 		logger.debug("removeCustomer :: Start");
 		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set("MyResponseHeader", "MyValue");
+		responseHeaders.set(HDR_KEY, HDR_VAL);
 		CustomerDetails customerDetails = (CustomerDetails) accountService.remove(customerId);
 		logger.debug("removeCustomer :: End");
 		return new ResponseEntity<>(customerDetails, responseHeaders,HttpStatus.NO_CONTENT);

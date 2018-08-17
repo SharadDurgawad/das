@@ -20,6 +20,8 @@ import com.customer.account.model.CustomerDetails;
 public class DataValidatorServiceImpl implements DataValidatorService {
 
 	private static final Logger logger = LoggerFactory.getLogger(DataValidatorServiceImpl.class);
+	private static final String allFieldsInValid = "All the fields are not valid :: {}"; 
+	private static final String allFieldsValid = "All the fields are valid for customer ID {}.";
 
 	@Autowired
 	private CustomerValidatorHelper customerValidator;
@@ -38,10 +40,10 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 			if (validationErrors != null && !validationErrors.isEmpty()) {
 				String errors = validationErrors.stream().collect(Collectors.joining(", "));
 				customerValidator.emptyValidationErrorList();
-				logger.error("All the fields are not valid :: {}", errors);
+				logger.error(allFieldsInValid, errors);
 				throw new ValidationException(errors);
 			}
-			logger.debug("All the fields are valid for customer ID {}.", customerDetails.getCustomerId());
+			logger.debug(allFieldsValid, customerDetails.getCustomerId());
 			return true;
 		}
 		throw new ValidationException("Customer cannot be null or empty.");
@@ -54,10 +56,10 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 			if (validationErrors != null && !validationErrors.isEmpty()) {
 				String errors = validationErrors.stream().collect(Collectors.joining(", "));
 				customerValidator.emptyValidationErrorList();
-				logger.error("All the fields are not valid :: {}", errors);
+				logger.error(allFieldsInValid, errors);
 				throw new ValidationException(errors);
 			}
-			logger.debug("All the fields are valid for customer ID {}.", customerDetails.getCustomerId());
+			logger.debug(allFieldsValid, customerDetails.getCustomerId());
 			return true;
 		}
 		throw new ValidationException("Customer and its ID cannot be null or empty.");
@@ -78,10 +80,10 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 			if (validationErrors != null && !validationErrors.isEmpty()) {
 				String errors = validationErrors.stream().collect(Collectors.joining(", "));
 				customerValidator.emptyValidationErrorList();
-				logger.error("All the fields are not valid :: {}", errors);
+				logger.error(allFieldsInValid, errors);
 				throw new ValidationException(errors);
 			}
-			logger.debug("All the fields are valid for customer ID {}.", customerDetails.getCustomerId());
+			logger.debug(allFieldsValid, customerDetails.getCustomerId());
 			return true;
 		}
 		throw new ValidationException("Customer and its ID cannot be null or empty.");

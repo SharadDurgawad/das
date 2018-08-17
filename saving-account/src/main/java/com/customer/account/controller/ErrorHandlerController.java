@@ -21,19 +21,13 @@ public class ErrorHandlerController extends ResponseEntityExceptionHandler {
 		ExceptionResponse exceptionResponse = new ExceptionResponse();
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
-	/*@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<ExceptionResponse> businessValidationExceptionHandler(RestClientException clientException){
-		ExceptionResponse exceptionResponse = new ExceptionResponse();
-		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-	}*/
 		
 	@ExceptionHandler({ ExecutionException.class })
 	public ResponseEntity<Object> handleExecutionException(Exception exception, WebRequest request) {
 		ExecutionException executionException = (ExecutionException) exception;
 		ApiException apiException = new ApiException(executionException.getErrorCode(), "Execution Exception",
 				executionException.getMessage());
-		return new ResponseEntity<Object>(apiException, HttpStatus.resolve(executionException.getErrorCode()));
+		return new ResponseEntity<>(apiException, HttpStatus.resolve(executionException.getErrorCode()));
 	}
 
 	@ExceptionHandler({ ValidationException.class })
@@ -41,6 +35,6 @@ public class ErrorHandlerController extends ResponseEntityExceptionHandler {
 		ValidationException validationException = (ValidationException) exception;
 		ApiException apiException = new ApiException(HttpStatus.BAD_REQUEST.value(), "Validation Exception",
 				validationException.getMessage());
-		return new ResponseEntity<Object>(apiException, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
 	}
 }
