@@ -3,6 +3,8 @@ package com.customer.account.staas;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import com.customer.account.service.AccountService;
+import com.customer.account.service.CustomerService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,7 +31,7 @@ public class CustomerStaasTest {
     private MockMvc mvc;
 	
 	@MockBean
-	private AccountService accountService;
+	private CustomerService customerService;
 	
 	@Test
     public void createCustomerWithStaasStubs() throws Exception {
@@ -41,6 +41,7 @@ public class CustomerStaasTest {
 		System.out.println(stubResponse);
 		this.mvc.perform(post("/api/customers")
 	            .contentType(MediaType.APPLICATION_JSON)
+	            .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTUzNTMwNzIwMn0.ci5wAZQSDYMggtOo7g2kBeo7QLPWsraTGmoKPeMHov5HvM1QZThtsAyZZ5mNIT5ad-B18ziDAa3G34ZWSWP78A")
 	            .content(stubResponse.getBody()))
 	            .andExpect(status().is2xxSuccessful());
     }
