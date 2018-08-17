@@ -26,6 +26,7 @@ public class ValidationException extends RuntimeException {
 	 * 
 	 * @return the validation error message.
 	 */
+	@Override
 	public String getMessage() {
 		return message;
 	}

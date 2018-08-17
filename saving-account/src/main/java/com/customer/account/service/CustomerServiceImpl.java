@@ -21,9 +21,9 @@ import com.customer.account.utility.ApplicationConstants;
 
 @Service
 @Transactional
-public class AccountServiceImpl implements AccountService {
+public class CustomerServiceImpl implements CustomerService {
 
-	private final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
+	private final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 	
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -49,10 +49,10 @@ public class AccountServiceImpl implements AccountService {
 						details =  customerRepository.saveAndFlush(customerDetails);
 					else
 						throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),
-								"Customer '" + customerDetails.getCustomerId() + "' does not have valid data.");
+								ApplicationConstants.CUSTOMER_MESSAGE+ApplicationConstants.SPACE + customerDetails.getCustomerId() + "' does not have valid data.");
 				}else {
 					throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),
-							"Customer '" + customerDetails.getCustomerId() + "' already Exists.");
+							ApplicationConstants.CUSTOMER_MESSAGE+ApplicationConstants.SPACE + customerDetails.getCustomerId() + "' already Exists.");
 				}
 		}else {
 			logger.error("Customer details are not present or invalid data provided.");
@@ -101,10 +101,10 @@ public class AccountServiceImpl implements AccountService {
 			if(customerId.equals(customerDetails.getCustomerId()) && dataValidator.isIdValidForCreate(customerDetails)){
 				customerDet = customerRepository.saveAndFlush(customerDetails);
 			}else {
-				throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),"Customer " + customerId + " does not match with update body");
+				throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),ApplicationConstants.CUSTOMER_MESSAGE+ApplicationConstants.SPACE+ customerId + " does not match with update body");
 			}
 		}else {
-			throw new ExecutionException(HttpStatus.NOT_FOUND.value(),"Customer " + customerId + " not found in the system");
+			throw new ExecutionException(HttpStatus.NOT_FOUND.value(),ApplicationConstants.CUSTOMER_MESSAGE+ApplicationConstants.SPACE + customerId + " not found in the system");
 		}
 		logger.debug("update::End");
 		return customerDet;

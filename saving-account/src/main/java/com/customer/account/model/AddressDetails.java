@@ -17,14 +17,7 @@ public class AddressDetails implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 8488082492094551867L;
-	
-	/*@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")*/
-	/*@SequenceGenerator(name="address_sequence", sequenceName="address_sequence",allocationSize=1)
-	@Column(name = "address_id")
-	@JsonProperty("addressId")
-	private Integer addressId;*/
-	
+
 	@Id 
 	@Column(name = "customer_id")
 	@JsonProperty("customerId")
@@ -61,14 +54,6 @@ public class AddressDetails implements Serializable {
 	@Column(name = "postal_code")
 	@JsonProperty("postalCode")
     private int postalCode;
-
-/*	public Integer getAddressId() {
-		return addressId;
-	}
-
-	public void setAddressId(Integer addressId) {
-		this.addressId = addressId;
-	}*/
 
 	public String getCustomerId() {
 		return customerId;
