@@ -11,6 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.customer.account.helper.CustomerValidatorHelper;
 import com.customer.account.model.AddressDetails;
 import com.customer.account.model.CustomerDetails;
+import com.customer.account.utility.ApplicationConstants;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerValidatorHelperTest {
@@ -25,7 +26,7 @@ public class CustomerValidatorHelperTest {
 		getCustomerDetails(customerDetails);
 		getCustomerAddress(addressDetails);
 		customerDetails.setAddressDetails(addressDetails);
-		List<String> response = customerValidatorHelper.isCustomerValidForCreate(customerDetails);
+		List<String> response = customerValidatorHelper.isCustomerValid(customerDetails,ApplicationConstants.CREATE);
 		Assert.assertNotNull(response);
 	}
 	
@@ -35,7 +36,7 @@ public class CustomerValidatorHelperTest {
 		AddressDetails addressDetails = null;
 		getCustomerDetailsNull(customerDetails);
 		customerDetails.setAddressDetails(addressDetails);
-		List<String> response = customerValidatorHelper.isCustomerValidForCreate(customerDetails);
+		List<String> response = customerValidatorHelper.isCustomerValid(customerDetails,ApplicationConstants.CREATE);
 		Assert.assertNotNull(response);
 	}
 	
@@ -45,7 +46,7 @@ public class CustomerValidatorHelperTest {
 		AddressDetails addressDetails = new AddressDetails();
 		getCustomerAddressNull(addressDetails);
 		customerDetails.setAddressDetails(addressDetails);
-		List<String> response = customerValidatorHelper.isCustomerValidForCreate(customerDetails);
+		List<String> response = customerValidatorHelper.isCustomerValid(customerDetails,ApplicationConstants.CREATE);
 		Assert.assertNotNull(response);
 	}
 	
@@ -54,7 +55,7 @@ public class CustomerValidatorHelperTest {
 		CustomerDetails customerDetails = new CustomerDetails();
 		AddressDetails addressDetails = null;
 		customerDetails.setAddressDetails(addressDetails);
-		List<String> response = customerValidatorHelper.isCustomerValidForCreate(customerDetails);
+		List<String> response = customerValidatorHelper.isCustomerValid(customerDetails,ApplicationConstants.CREATE);
 		Assert.assertNotNull(response);
 	}
 	
@@ -66,7 +67,7 @@ public class CustomerValidatorHelperTest {
 		getCustomerDetailsNotAlpha(customerDetails);
 		getCustomerAddressNotAlpha(addressDetails);
 		customerDetails.setAddressDetails(addressDetails);
-		List<String> response = customerValidatorHelper.isCustomerValidForCreate(customerDetails);
+		List<String> response = customerValidatorHelper.isCustomerValid(customerDetails,ApplicationConstants.CREATE);
 		Assert.assertNotNull(response);
 	}
 	
@@ -97,7 +98,7 @@ public class CustomerValidatorHelperTest {
 		getCustomerDetails(customerDetails);
 		getCustomerAddress(addressDetails);
 		customerDetails.setAddressDetails(addressDetails);
-		List<String> response = customerValidatorHelper.isCustomerValidForUpdate(customerDetails);
+		List<String> response = customerValidatorHelper.isCustomerValid(customerDetails,ApplicationConstants.UPDATE);
 		Assert.assertNotNull(response);
 	}
 	

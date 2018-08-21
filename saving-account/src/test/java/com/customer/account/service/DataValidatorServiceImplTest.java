@@ -15,6 +15,7 @@ import com.customer.account.exceptions.ValidationException;
 import com.customer.account.helper.CustomerValidatorHelper;
 import com.customer.account.model.AddressDetails;
 import com.customer.account.model.CustomerDetails;
+import com.customer.account.utility.ApplicationConstants;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class DataValidatorServiceImplTest {
@@ -31,7 +32,7 @@ public class DataValidatorServiceImplTest {
 		getCustomerDetails(customerDetails);
 		getCustomerAddress(addressDetails);
 		List<String> validationErrors = new ArrayList<>();
-		Mockito.when(customerValidator.isCustomerValidForCreate(customerDetails)).thenReturn(validationErrors);
+		Mockito.when(customerValidator.isCustomerValid(customerDetails, ApplicationConstants.CREATE)).thenReturn(validationErrors);
 		Boolean response = dataValidatorService.isDataValidForCreate(customerDetails);
 		Assert.assertNotNull(response);
 	}
@@ -44,7 +45,7 @@ public class DataValidatorServiceImplTest {
 		getCustomerAddress(addressDetails);
 		List<String> validationErrors = new ArrayList<>();
 		validationErrors.add("404");
-		Mockito.when(customerValidator.isCustomerValidForCreate(customerDetails)).thenReturn(validationErrors);
+		Mockito.when(customerValidator.isCustomerValid(customerDetails, ApplicationConstants.CREATE)).thenReturn(validationErrors);
 		dataValidatorService.isDataValidForCreate(customerDetails);
 	}
 	
@@ -91,7 +92,7 @@ public class DataValidatorServiceImplTest {
 		getCustomerDetails(customerDetails);
 		getCustomerAddress(addressDetails);
 		List<String> validationErrors = new ArrayList<>();
-		Mockito.when(customerValidator.isCustomerValidForUpdate(customerDetails)).thenReturn(validationErrors);
+		Mockito.when(customerValidator.isCustomerValid(customerDetails, ApplicationConstants.UPDATE)).thenReturn(validationErrors);
 		Boolean response = dataValidatorService.isDataValidForUpdate(customerDetails);
 		Assert.assertNotNull(response);
 	}
@@ -104,7 +105,7 @@ public class DataValidatorServiceImplTest {
 		getCustomerAddress(addressDetails);
 		List<String> validationErrors = new ArrayList<>();
 		validationErrors.add("404");
-		Mockito.when(customerValidator.isCustomerValidForUpdate(customerDetails)).thenReturn(validationErrors);
+		Mockito.when(customerValidator.isCustomerValid(customerDetails, ApplicationConstants.UPDATE)).thenReturn(validationErrors);
 		dataValidatorService.isDataValidForUpdate(customerDetails);
 	}
 	

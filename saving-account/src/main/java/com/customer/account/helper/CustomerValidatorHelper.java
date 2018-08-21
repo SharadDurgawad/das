@@ -11,6 +11,7 @@ import org.springframework.util.ObjectUtils;
 import com.customer.account.model.AddressDetails;
 import com.customer.account.model.CustomerDetails;
 import com.customer.account.utility.ApplicationConstants;
+import com.customer.account.utility.CommonUtil;
 import com.customer.account.utility.DateUtil;
 
 @Component
@@ -18,13 +19,18 @@ public class CustomerValidatorHelper {
 
 	private List<String> validationErrors = new ArrayList<>();
 
-	public List<String> isCustomerValidForCreate(CustomerDetails customer) {
-		validateFirstName(customer.getCustFirstName());
-		validateMiddleName(customer.getCustMiddleName());
-		validateLastName(customer.getCustLastName());
+	public List<String> isCustomerValid(CustomerDetails customer, String operation) {
+		if ("U".equalsIgnoreCase(operation)) {
+			validateAccountNumber(customer.getAccountNumber());
+			validateCustomerId(customer.getCustomerId());
+		}
+		validateUniqueId(customer.getUniqueId());
+		CommonUtil.validateField("First Name ", customer.getCustFirstName(), true, validationErrors);
+		CommonUtil.validateField("Middle Name", customer.getCustMiddleName(), true, validationErrors);
+		CommonUtil.validateField("Last Name", customer.getCustLastName(), true, validationErrors);
 		validateEmailId(customer.getEmailId());
 		validateDOB(customer.getDateOfBirth());
-		validatePhoneNumber(customer.getPhoneNumber());
+		CommonUtil.validateField("Phone Number", customer.getPhoneNumber(), false, validationErrors);
 		validateGender(customer.getGender());
 		validateAddress(customer.getAddressDetails());
 		return validationErrors;
@@ -51,22 +57,6 @@ public class CustomerValidatorHelper {
 		}
 	}
 
-	public List<String> isCustomerValidForUpdate(CustomerDetails customer) {
-		validateAccountNumber(customer.getAccountNumber());
-		validateUniqueId(customer.getUniqueId());
-		validateCustomerId(customer.getCustomerId());
-		validateFirstName(customer.getCustFirstName());
-		validateMiddleName(customer.getCustMiddleName());
-		validateLastName(customer.getCustLastName());
-		validateEmailId(customer.getEmailId());
-		validateDOB(customer.getDateOfBirth());
-		validatePhoneNumber(customer.getPhoneNumber());
-		validateGender(customer.getGender());
-		validateAddress(customer.getAddressDetails());
-		return validationErrors;
-
-	}
-
 	public void emptyValidationErrorList() {
 		validationErrors.clear();
 	}
@@ -79,62 +69,14 @@ public class CustomerValidatorHelper {
 
 	private void validateAddress(AddressDetails addressDetails) {
 		if (addressDetails != null) {
-			validateCity(addressDetails.getCity());
-			validateState(addressDetails.getState());
-			validateCountry(addressDetails.getCountry());
-			validateSubdivision(addressDetails.getSubdivision());
-			validateLine1(addressDetails.getLine1());
-			validateLine2(addressDetails.getLine2());
+			CommonUtil.validateField("City", addressDetails.getCity(), true, validationErrors);
+			CommonUtil.validateField("State", addressDetails.getState(), true, validationErrors);
+			CommonUtil.validateField("Country", addressDetails.getCountry(), true, validationErrors);
+			CommonUtil.validateField("Subdivision", addressDetails.getSubdivision(), false, validationErrors);
+			CommonUtil.validateField("Address Line1", addressDetails.getLine1(), false, validationErrors);
+			CommonUtil.validateField("Address Line2", addressDetails.getLine2(), false, validationErrors);
 		} else {
 			validationErrors.add("Address" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
-		}
-	}
-
-	private void validateLine2(String line2) {
-		if (StringUtils.isEmpty(line2)) {
-			validationErrors.add("Line2" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
-		}
-	}
-
-	private void validateLine1(String line1) {
-		if (StringUtils.isEmpty(line1)) {
-			validationErrors.add("Line1" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
-		}
-	}
-
-	private void validateSubdivision(String subdivision) {
-		if (StringUtils.isNotEmpty(subdivision) && !StringUtils.isAlpha(subdivision)) {
-				validationErrors.add("Sub division" + ApplicationConstants.ALPHA_ERROR_MESSAGE);
-		}
-	}
-
-	private void validateCountry(String country) {
-		if (StringUtils.isNotEmpty(country)) {
-			if (!StringUtils.isAlpha(country)) {
-				validationErrors.add("Country" + ApplicationConstants.ALPHA_ERROR_MESSAGE);
-			}
-		} else {
-			validationErrors.add("Country" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
-		}
-	}
-
-	private void validateState(String state) {
-		if (StringUtils.isNotEmpty(state)) {
-			if (!StringUtils.isAlpha(state)) {
-				validationErrors.add("State" + ApplicationConstants.ALPHA_ERROR_MESSAGE);
-			}
-		} else {
-			validationErrors.add("State" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
-		}
-	}
-
-	private void validateCity(String city) {
-		if (StringUtils.isNotEmpty(city)) {
-			if (!StringUtils.isAlpha(city)) {
-				validationErrors.add("City" + ApplicationConstants.ALPHA_ERROR_MESSAGE);
-			}
-		} else {
-			validationErrors.add("City" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
 		}
 	}
 
@@ -145,18 +87,6 @@ public class CustomerValidatorHelper {
 			}
 		} else {
 			validationErrors.add("Gender" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
-		}
-	}
-
-	private void validatePhoneNumber(String phoneNumber) {
-		if (phoneNumber == null) {
-			validationErrors.add("Phone number cannot be empty");
-		}
-	}
-
-	private void validateMiddleName(String custMiddleName) {
-		if (StringUtils.isNotEmpty(custMiddleName) && !StringUtils.isAlpha(custMiddleName)) {
-				validationErrors.add("Middle name" + ApplicationConstants.ALPHA_ERROR_MESSAGE);
 		}
 	}
 
@@ -179,23 +109,4 @@ public class CustomerValidatorHelper {
 		}
 	}
 
-	private void validateFirstName(String custFirstName) {
-		if (StringUtils.isEmpty(custFirstName)) {
-			validationErrors.add("First name" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
-		} else {
-			if (!StringUtils.isAlpha(custFirstName)) {
-				validationErrors.add("First name" + ApplicationConstants.ALPHA_ERROR_MESSAGE);
-			}
-		}
-	}
-
-	private void validateLastName(String custLastName) {
-		if (StringUtils.isEmpty(custLastName)) {
-			validationErrors.add("Last name" + ApplicationConstants.EMPTY_ERROR_MESSAGE);
-		} else {
-			if (!StringUtils.isAlpha(custLastName)) {
-				validationErrors.add("Last name" + ApplicationConstants.ALPHA_ERROR_MESSAGE);
-			}
-		}
-	}
 }

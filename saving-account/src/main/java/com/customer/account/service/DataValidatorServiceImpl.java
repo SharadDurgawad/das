@@ -37,7 +37,7 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 	public boolean isDataValidForCreate(CustomerDetails customerDetails) {
 		if (customerDetails != null) {
 			// Check the validity of each field.
-			List<String> validationErrors = customerValidator.isCustomerValidForCreate(customerDetails);
+			List<String> validationErrors = customerValidator.isCustomerValid(customerDetails, ApplicationConstants.CREATE);
 			if (validationErrors != null && !validationErrors.isEmpty()) {
 				String errors = validationErrors.stream().collect(Collectors.joining(", "));
 				customerValidator.emptyValidationErrorList();
@@ -77,7 +77,7 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 		if (customerDetails != null && customerDetails.getCustomerId() != null) {
 
 			// Check the validity of each field.
-			List<String> validationErrors = customerValidator.isCustomerValidForUpdate(customerDetails);
+			List<String> validationErrors = customerValidator.isCustomerValid(customerDetails, ApplicationConstants.UPDATE);
 			if (validationErrors != null && !validationErrors.isEmpty()) {
 				String errors = validationErrors.stream().collect(Collectors.joining(", "));
 				customerValidator.emptyValidationErrorList();

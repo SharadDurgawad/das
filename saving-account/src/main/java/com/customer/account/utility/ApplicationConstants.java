@@ -10,10 +10,14 @@ public interface ApplicationConstants {
 	public final String ALPHA_ERROR_MESSAGE = " should contain only alphabets";
 	public final String INVALID_DOB_ERROR = "Invalid date of Birth";
 	
-	public final String INVALID_FIELD_MESSAGE = "All the fields are not valid :: {}";
-	public final String VALID_FIELD_MESSAGE = "All the fields are valid for customer ID {}.";
 	public final String CUSTOMER_MESSAGE = "Customer";
 	public final String SPACE = " ";
+	public final String ACTUAL_VALUE = ", Actual value is [";
+	public final String openingBracket = "[";
+	public final String closingBracket = "]";
+	public final String comma = ",";
+	public final String CREATE = "C";
+	public final String UPDATE = "U";
 
 	public static final String SECRET = "SecretKeyToGenJWTs";
 	public static final long EXPIRATION_TIME = 864_000_000; // 10 days
