@@ -12,12 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
+import com.customer.account.configuration.BasicConfiguration;
 import com.customer.account.dao.CustomCustomerRepository;
 import com.customer.account.dao.CustomerRepository;
 import com.customer.account.exceptions.ExecutionException;
 import com.customer.account.model.AccountDetails;
 import com.customer.account.model.CustomerDetails;
 import com.customer.account.utility.ApplicationConstants;
+import com.customer.account.utility.CommonUtil;
 
 @Service
 @Transactional
@@ -34,9 +36,12 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private DataValidatorServiceImpl dataValidator;
 	
+	@Autowired
+	private BasicConfiguration configuration;
+	
 	@Override
 	public CustomerDetails create(Object object) {
-		logger.debug("create::Start");
+		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		CustomerDetails customerDetails = null;
 		AccountDetails accountDetails = new AccountDetails();
 		CustomerDetails details = null ;
@@ -59,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),
 					"Customer details are not present or invalid data provided.");
 		}
-		logger.debug("create::End");
+		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return details;
 	}
 	
@@ -93,7 +98,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public CustomerDetails update(Object object,Object customerId) {
-		logger.debug("update::Start");
+		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		CustomerDetails customerDet;
 		CustomerDetails customerDetails = null;
 		customerDetails = (CustomerDetails) object;
@@ -106,13 +111,13 @@ public class CustomerServiceImpl implements CustomerService {
 		}else {
 			throw new ExecutionException(HttpStatus.NOT_FOUND.value(),ApplicationConstants.CUSTOMER_MESSAGE+ApplicationConstants.SPACE + customerId + " not found in the system");
 		}
-		logger.debug("update::End");
+		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return customerDet;
 	}
 
 	@Override
 	public CustomerDetails retrive(Object object) {
-		logger.debug("retrive::Start");
+		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		String customerId = (String) object;
 		List<CustomerDetails> customerDetailsList;
 		if (customerRepository.existsById(customerId)) {
@@ -121,17 +126,17 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new ExecutionException(HttpStatus.NOT_FOUND.value(),
 					"Customer " + customerId + " not found in the system");
 		}
-		logger.debug("retrive::End");
+		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return !CollectionUtils.isEmpty(customerDetailsList)?customerDetailsList.get(ApplicationConstants.ZERO):null;
 	}
 
 	@Override
 	public List<CustomerDetails> retriveAll() {
-		logger.debug("retriveAll::Start");
+		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		List<CustomerDetails> customerDetailsList ;
 		customerDetailsList = customCustomerRepository.retriveAllCustomer();
 		if (!CollectionUtils.isEmpty(customerDetailsList)) {
-			logger.debug("retriveAll::End");
+			logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 			return customerDetailsList;
 		}else {
 			throw new ExecutionException(HttpStatus.NOT_FOUND.value(),
@@ -141,7 +146,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerDetails remove(Object object) {
-		logger.debug("remove::Start");
+		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		CustomerDetails customerDetails = null;
 		if(!ObjectUtils.isEmpty(object)) {
 			String customerId =  (String) object;
@@ -152,7 +157,7 @@ public class CustomerServiceImpl implements CustomerService {
 				customerDetails = retrive(customerId);
 			}
 		}
-		logger.debug("remove::End");
+		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return customerDetails;
 	}
 	
