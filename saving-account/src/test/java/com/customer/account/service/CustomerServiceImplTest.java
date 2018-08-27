@@ -10,13 +10,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.customer.account.configuration.BasicConfiguration;
 import com.customer.account.dao.CustomCustomerRepository;
 import com.customer.account.dao.CustomerRepository;
 import com.customer.account.exceptions.ExecutionException;
 import com.customer.account.model.AddressDetails;
 import com.customer.account.model.CustomerDetails;
 
+@SpringBootApplication
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class CustomerServiceImplTest {
 	
@@ -31,6 +34,9 @@ public class CustomerServiceImplTest {
 	
 	@Mock
 	private DataValidatorServiceImpl dataValidator;
+	
+	@Mock
+	private BasicConfiguration configuration;
 	
 	@Test
 	public void createTest() {
