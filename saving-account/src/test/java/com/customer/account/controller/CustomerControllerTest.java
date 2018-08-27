@@ -10,16 +10,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 
-import com.customer.account.configuration.BasicConfiguration;
 import com.customer.account.exceptions.ExecutionException;
 import com.customer.account.model.CustomerDetails;
 import com.customer.account.service.CustomerService;
 
-@SpringBootApplication
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerControllerTest {
 	
@@ -28,9 +24,6 @@ public class CustomerControllerTest {
 	
 	@Mock
 	private CustomerService accountService;
-	
-	@Mock
-	private BasicConfiguration configuration;
 	
 	@Test
 	public void createCustomerTest() {

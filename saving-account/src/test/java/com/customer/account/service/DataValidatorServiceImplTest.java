@@ -10,17 +10,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.customer.account.configuration.BasicConfiguration;
 import com.customer.account.exceptions.ValidationException;
 import com.customer.account.helper.CustomerValidatorHelper;
 import com.customer.account.model.AddressDetails;
 import com.customer.account.model.CustomerDetails;
 import com.customer.account.utility.ApplicationConstants;
 
-@SpringBootApplication
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class DataValidatorServiceImplTest {
 	
@@ -28,9 +24,6 @@ public class DataValidatorServiceImplTest {
 	private DataValidatorServiceImpl dataValidatorService;
 	@Mock
 	private CustomerValidatorHelper customerValidator;
-	
-	@Mock
-	private BasicConfiguration configuration;
 
 	@Test
 	public void isDataValidForCreateTest() {
