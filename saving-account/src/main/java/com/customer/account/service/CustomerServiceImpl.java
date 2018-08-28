@@ -26,78 +26,85 @@ import com.customer.account.utility.CommonUtil;
 public class CustomerServiceImpl implements CustomerService {
 
 	private final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
-	
+
 	@Autowired
 	private CustomerRepository customerRepository;
 
 	@Autowired
 	private CustomCustomerRepository customCustomerRepository;
-	
+
 	@Autowired
 	private DataValidatorServiceImpl dataValidator;
-	
+
 	@Autowired
 	private BasicConfiguration configuration;
-	
+
 	@Override
 	public CustomerDetails create(Object object) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		CustomerDetails customerDetails = null;
 		AccountDetails accountDetails = new AccountDetails();
-		CustomerDetails details = null ;
+		CustomerDetails details = null;
 		customerDetails = (CustomerDetails) object;
 		if (!ObjectUtils.isEmpty(object) && dataValidator.isDataValidForCreate(customerDetails)) {
-				generateAccountDetails(customerDetails, accountDetails);
-				setCustomerFields(customerDetails, accountDetails);
-				if(!customerRepository.existsById(customerDetails.getCustomerId())) {
-					if(dataValidator.isIdValidForCreate(customerDetails))
-						details =  customerRepository.saveAndFlush(customerDetails);
-					else
-						throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),
-								ApplicationConstants.CUSTOMER_MESSAGE+ApplicationConstants.SPACE + customerDetails.getCustomerId() + "' does not have valid data.");
-				}else {
+			generateAccountDetails(customerDetails, accountDetails);
+			setCustomerFields(customerDetails, accountDetails);
+			if (!customerRepository.existsById(customerDetails.getCustomerId())) {
+				if (dataValidator.isIdValidForCreate(customerDetails))
+					details = customerRepository.saveAndFlush(customerDetails);
+				else
 					throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),
-							ApplicationConstants.CUSTOMER_MESSAGE+ApplicationConstants.SPACE + customerDetails.getCustomerId() + "' already Exists.");
-				}
-		}else {
-			logger.error("Customer details are not present or invalid data provided.");
-			throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),
-					"Customer details are not present or invalid data provided.");
+							configuration.getInvalidData() + " for " + ApplicationConstants.CUSTOMER_MESSAGE
+									+ ApplicationConstants.SPACE + customerDetails.getCustomerId());
+			} else {
+				throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),
+						ApplicationConstants.CUSTOMER_MESSAGE + ApplicationConstants.SPACE
+								+ customerDetails.getCustomerId() + configuration.getAlreadyExists());
+			}
+		} else {
+			logger.error(configuration.getInvalidData());
+			throw new ExecutionException(HttpStatus.BAD_REQUEST.value(), configuration.getInvalidData());
 		}
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return details;
 	}
-	
-	private void setCustomerFields(CustomerDetails customerDetails,AccountDetails accountDetails) {
+
+	private void setCustomerFields(CustomerDetails customerDetails, AccountDetails accountDetails) {
 		customerDetails.setAccountNumber(accountDetails.getAccountNumber());
 		customerDetails.setCustomerId(accountDetails.getCustomerId());
 		customerDetails.getAddressDetails().setCustomerId(accountDetails.getCustomerId());
 		customerDetails.setIsActive(String.valueOf(Boolean.TRUE));
 		customerDetails.setGender(String.valueOf(customerDetails.getGender()));
 	}
-	
-	private void generateAccountDetails(CustomerDetails customerDetails,AccountDetails accountDetails) {
+
+	private void generateAccountDetails(CustomerDetails customerDetails, AccountDetails accountDetails) {
 		long randomAccountNumber = CommonUtil.getRandomNumber();
-		long randomCustomerId =  CommonUtil.getRandomNumber();
-		
+		long randomCustomerId = CommonUtil.getRandomNumber();
+
 		accountDetails.setAccountNumber(String.valueOf(randomAccountNumber));
 		accountDetails.setCustomerId(String.valueOf(randomCustomerId));
 	}
-	
+
 	@Override
-	public CustomerDetails update(Object object,Object customerId) {
+	public CustomerDetails update(Object object, Object customerId) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		CustomerDetails customerDet;
 		CustomerDetails customerDetails = null;
 		customerDetails = (CustomerDetails) object;
-		if(!ObjectUtils.isEmpty(customerDetails) && customerRepository.existsById((String) customerId) && dataValidator.isDataValidForUpdate(customerDetails)) {
-			if(customerId.equals(customerDetails.getCustomerId()) && dataValidator.isIdValidForCreate(customerDetails)){
+		if (!ObjectUtils.isEmpty(customerDetails) && customerRepository.existsById((String) customerId)
+				&& dataValidator.isDataValidForUpdate(customerDetails)) {
+			if (customerId.equals(customerDetails.getCustomerId())
+					&& dataValidator.isIdValidForCreate(customerDetails)) {
 				customerDet = customerRepository.saveAndFlush(customerDetails);
-			}else {
-				throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),ApplicationConstants.CUSTOMER_MESSAGE+ApplicationConstants.SPACE+ customerId + " does not match with update body");
+			} else {
+				throw new ExecutionException(configuration, HttpStatus.BAD_REQUEST.value(),
+						CustomerDetails.class.getSimpleName(), "customerId", customerId.toString(),
+						configuration.getIdMismatched());
 			}
-		}else {
-			throw new ExecutionException(HttpStatus.NOT_FOUND.value(),ApplicationConstants.CUSTOMER_MESSAGE+ApplicationConstants.SPACE + customerId + " not found in the system");
+		} else {
+			throw new ExecutionException(configuration, HttpStatus.NOT_FOUND.value(),
+					CustomerDetails.class.getSimpleName(), "customerId", customerId.toString(),
+					configuration.getNotFound());
 		}
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return customerDet;
@@ -110,25 +117,27 @@ public class CustomerServiceImpl implements CustomerService {
 		List<CustomerDetails> customerDetailsList;
 		if (customerRepository.existsById(customerId)) {
 			customerDetailsList = customCustomerRepository.retriveCustomer(customerId);
-		}else {
-			throw new ExecutionException(HttpStatus.NOT_FOUND.value(),
-					"Customer " + customerId + " not found in the system");
+		} else {
+			throw new ExecutionException(configuration, HttpStatus.NOT_FOUND.value(),
+					CustomerDetails.class.getSimpleName(), "customerId", customerId,
+					configuration.getNotFound());
 		}
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
-		return !CollectionUtils.isEmpty(customerDetailsList)?customerDetailsList.get(ApplicationConstants.ZERO):null;
+		return !CollectionUtils.isEmpty(customerDetailsList) ? customerDetailsList.get(ApplicationConstants.ZERO)
+				: null;
 	}
 
 	@Override
 	public List<CustomerDetails> retriveAll() {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
-		List<CustomerDetails> customerDetailsList ;
+		List<CustomerDetails> customerDetailsList;
 		customerDetailsList = customCustomerRepository.retriveAllCustomer();
 		if (!CollectionUtils.isEmpty(customerDetailsList)) {
 			logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 			return customerDetailsList;
-		}else {
-			throw new ExecutionException(HttpStatus.NOT_FOUND.value(),
-					"No Acount details found in the system");
+		} else {
+			throw new ExecutionException(configuration, HttpStatus.NOT_FOUND.value(),
+					CustomerDetails.class.getSimpleName(), null, null, configuration.getNotFound());
 		}
 	}
 
@@ -136,10 +145,10 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerDetails remove(Object object) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		CustomerDetails customerDetails = null;
-		if(!ObjectUtils.isEmpty(object)) {
-			String customerId =  (String) object;
+		if (!ObjectUtils.isEmpty(object)) {
+			String customerId = (String) object;
 			customerDetails = retrive(customerId);
-			if(dataValidator.isDataValidForUpdate(customerDetails)) {
+			if (dataValidator.isDataValidForUpdate(customerDetails)) {
 				customerDetails.setIsActive(String.valueOf(Boolean.FALSE));
 				customerRepository.saveAndFlush(customerDetails);
 				customerDetails = retrive(customerId);
@@ -148,8 +157,5 @@ public class CustomerServiceImpl implements CustomerService {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return customerDetails;
 	}
-	
-	
-	
 
 }

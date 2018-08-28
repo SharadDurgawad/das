@@ -1,7 +1,5 @@
 package com.customer.account.exceptions;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.customer.account.configuration.BasicConfiguration;
 
 /**

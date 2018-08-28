@@ -22,6 +22,10 @@ public class BasicConfiguration {
 	private String className;
 	private String  allFieldsValid;
 	private String  allFieldsNotValid;
+	private String invalidData;
+	private String alreadyExists;
+	private String executionException;
+	private String idMismatched;
 	
 	public String getClassName() {
 		return className;
@@ -149,6 +153,38 @@ public class BasicConfiguration {
 
 	public void setAllFieldsNotValid(String allFieldsNotValid) {
 		this.allFieldsNotValid = allFieldsNotValid;
+	}
+
+	public String getInvalidData() {
+		return invalidData;
+	}
+
+	public void setInvalidData(String invalidData) {
+		this.invalidData = invalidData;
+	}
+
+	public String getAlreadyExists() {
+		return alreadyExists;
+	}
+
+	public void setAlreadyExists(String alreadyExists) {
+		this.alreadyExists = alreadyExists;
+	}
+
+	public String getExecutionException() {
+		return executionException;
+	}
+
+	public void setExecutionException(String executionException) {
+		this.executionException = executionException;
+	}
+
+	public String getIdMismatched() {
+		return idMismatched;
+	}
+
+	public void setIdMismatched(String idMismatched) {
+		this.idMismatched = idMismatched;
 	}
 
 }

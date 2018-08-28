@@ -1,5 +1,7 @@
 package com.customer.account.exceptions;
 
+import com.customer.account.configuration.BasicConfiguration;
+
 /**
  * The ExecutionException class.
  */
@@ -25,7 +27,28 @@ public class ExecutionException extends RuntimeException {
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
 	}
-
+	
+/**
+	 * Instantiates a new object of {@link ExecutionException}
+	 * 
+	 * @param errorCode    the error code
+	 * @param errorMessage the error message
+	 */
+	public ExecutionException(BasicConfiguration configuration, int errorCode, String className, String propertyName, String value, String reason) {
+		super(reason);
+		this.errorCode = errorCode;		
+		StringBuilder sb = new StringBuilder();
+		sb.append(configuration.getStars());
+		sb.append(configuration.getExecutionException());
+		sb.append(configuration.getStars());
+		sb.append(configuration.getClassName()).append(className);
+		sb.append(configuration.getProperty()).append(propertyName);
+		sb.append(configuration.getValue()).append(value);
+		sb.append(configuration.getReason()).append(reason);
+		sb.append(configuration.getStars());
+		
+		this.errorMessage = sb.toString();
+	}
 	/**
 	 * Instantiates a new object of {@link ExecutionException}
 	 * 
