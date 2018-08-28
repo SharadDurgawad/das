@@ -36,7 +36,7 @@ public class CustomerController {
 	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
 	@Autowired
-	private CustomerService accountService;
+	private CustomerService customerService;
 	
 	@Autowired
 	private BasicConfiguration configuration;
@@ -46,7 +46,7 @@ public class CustomerController {
 	public ResponseEntity<CustomerDetails> createCustomer(@RequestBody CustomerDetails customerDetails) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		HttpHeaders responseHeaders = new HttpHeaders();
-		CustomerDetails details = (CustomerDetails) accountService.create(customerDetails);
+		CustomerDetails details = (CustomerDetails) customerService.create(customerDetails);
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return new ResponseEntity<>(details, responseHeaders,HttpStatus.CREATED);
 	}
@@ -56,7 +56,7 @@ public class CustomerController {
 	public ResponseEntity<CustomerDetails> getCustomer(@PathVariable String customerId) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		HttpHeaders responseHeaders = new HttpHeaders();
-		CustomerDetails customerDetails = (CustomerDetails) accountService.retrive(customerId);
+		CustomerDetails customerDetails = (CustomerDetails) customerService.retrive(customerId);
 		if(ObjectUtils.isEmpty(customerDetails) || StringUtils.isEmpty(customerDetails.getAccountNumber())) {
 		throw new ExecutionException(HttpStatus.NOT_FOUND.value(),
 				"Customer " + customerId + " not found in the system");
@@ -71,7 +71,7 @@ public class CustomerController {
 	public ResponseEntity<List<CustomerDetails>> getAllCustomerDetails() {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		HttpHeaders responseHeaders = new HttpHeaders();
-		List<CustomerDetails> customerDetailsList = accountService.retriveAll();
+		List<CustomerDetails> customerDetailsList = customerService.retriveAll();
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return new ResponseEntity<>(customerDetailsList, responseHeaders,HttpStatus.OK);
 	}
@@ -81,7 +81,7 @@ public class CustomerController {
 	public ResponseEntity<CustomerDetails> updateCustomer(@RequestBody CustomerDetails customerDetails,@PathVariable String customerId) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		HttpHeaders responseHeaders = new HttpHeaders();
-		CustomerDetails details = (CustomerDetails) accountService.update(customerDetails,customerId);
+		CustomerDetails details = (CustomerDetails) customerService.update(customerDetails,customerId);
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return new ResponseEntity<>(details, responseHeaders,HttpStatus.ACCEPTED);
 	}
@@ -91,7 +91,7 @@ public class CustomerController {
 	public ResponseEntity<CustomerDetails> removeCustomer(@PathVariable String customerId) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		HttpHeaders responseHeaders = new HttpHeaders();
-		CustomerDetails customerDetails = (CustomerDetails) accountService.remove(customerId);
+		CustomerDetails customerDetails = (CustomerDetails) customerService.remove(customerId);
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return new ResponseEntity<>(customerDetails, responseHeaders,HttpStatus.NO_CONTENT);
 	}
