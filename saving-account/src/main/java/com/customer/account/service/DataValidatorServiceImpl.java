@@ -26,8 +26,6 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 	private BasicConfiguration configuration;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DataValidatorServiceImpl.class);
-	private static final String allFieldsInValid = "All the fields are not valid :: {}"; 
-	private static final String allFieldsValid = "All the fields are valid for customer ID {}.";
 
 	@Autowired
 	private CustomerValidatorHelper customerValidator;
@@ -47,14 +45,14 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 			if (validationErrors != null && !validationErrors.isEmpty()) {
 				String errors = validationErrors.stream().collect(Collectors.joining(", "));
 				customerValidator.emptyValidationErrorList();
-				logger.error(allFieldsInValid, errors);
+				logger.error(configuration.getAllFieldsNotValid(), errors);
 				throw new ValidationException(errors);
 			}
-			logger.debug(allFieldsValid, customerDetails.getCustomerId());
+			logger.debug(configuration.getAllFieldsValid(), customerDetails.getCustomerId());
 			logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 			return true;
 		}
-		throw new ValidationException("Customer cannot be null or empty.");
+		throw new ValidationException(configuration, CustomerDetails.class.getSimpleName(), "", null, configuration.getIsNull());
 	}
 
 	public boolean isIdValidForCreate(CustomerDetails customerDetails) {
@@ -65,14 +63,14 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 			if (validationErrors != null && !validationErrors.isEmpty()) {
 				String errors = validationErrors.stream().collect(Collectors.joining(", "));
 				customerValidator.emptyValidationErrorList();
-				logger.error(allFieldsInValid, errors);
+				logger.error(configuration.getAllFieldsNotValid(), errors);
 				throw new ValidationException(errors);
 			}
-			logger.debug(allFieldsValid, customerDetails.getCustomerId());
+			logger.debug(configuration.getAllFieldsValid(), customerDetails.getCustomerId());
 			logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 			return true;
-		}
-		throw new ValidationException("Customer and its ID cannot be null or empty.");
+		}	
+		throw new ValidationException(configuration, CustomerDetails.class.getSimpleName(), "CustomerId", customerDetails.getCustomerId(), configuration.getIsNull());
 	}
 
 	/**
@@ -91,13 +89,13 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 			if (validationErrors != null && !validationErrors.isEmpty()) {
 				String errors = validationErrors.stream().collect(Collectors.joining(", "));
 				customerValidator.emptyValidationErrorList();
-				logger.error(allFieldsInValid, errors);
+				logger.error(configuration.getAllFieldsNotValid(), errors);
 				throw new ValidationException(errors);
 			}
-			logger.debug(allFieldsValid, customerDetails.getCustomerId());
+			logger.debug(configuration.getAllFieldsValid(), customerDetails.getCustomerId());
 			logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 			return true;
 		}
-		throw new ValidationException("Customer and its ID cannot be null or empty.");
+		throw new ValidationException(configuration, CustomerDetails.class.getSimpleName(), "CustomerId", customerDetails.getCustomerId(), configuration.getIsNull());
 	}
 }

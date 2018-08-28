@@ -27,6 +27,7 @@ public class CustomerDetails implements Serializable {
 	private String customerId;
 
 	@Column(name = "unique_id", nullable = false, unique = true)
+	@JsonProperty("uniqueId")
 	private String uniqueId;
 
 	@JsonProperty("accountNumber")

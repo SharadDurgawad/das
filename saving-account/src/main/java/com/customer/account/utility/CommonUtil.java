@@ -1,6 +1,7 @@
 package com.customer.account.utility;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -55,5 +56,11 @@ public class CommonUtil {
 	 */
 	private static String getCallingMethodName() {
 		return Thread.currentThread().getStackTrace()[3].getMethodName();
+	}
+	
+	public static Long getRandomNumber() {
+		long minVal = 0000000000L;
+		long maxVal = 9999999999L;
+		return ThreadLocalRandom.current().nextLong(minVal, maxVal + 1);
 	}
 }

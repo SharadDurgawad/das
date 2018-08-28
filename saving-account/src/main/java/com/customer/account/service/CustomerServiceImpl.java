@@ -77,23 +77,11 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	private void generateAccountDetails(CustomerDetails customerDetails,AccountDetails accountDetails) {
-		long minAccountNo = 000000000000L;
-		long maxAccountNo = 999999999999L;
-		long randomAccountNumber = ThreadLocalRandom.current().nextLong(minAccountNo, maxAccountNo + 1);
-		
-		
-		long minCustomer = 00000000L;
-		long maxCustomer = 99999999L;
-		long randomCustomerId = ThreadLocalRandom.current().nextLong(minCustomer, maxCustomer + 1);
-		
-		long minUniqueId = 0000000000L;
-		long maxUniqueId = 9999999999L;
-		long randomUniqueId = ThreadLocalRandom.current().nextLong(minUniqueId, maxUniqueId + 1);
-		
+		long randomAccountNumber = CommonUtil.getRandomNumber();
+		long randomCustomerId =  CommonUtil.getRandomNumber();
 		
 		accountDetails.setAccountNumber(String.valueOf(randomAccountNumber));
 		accountDetails.setCustomerId(String.valueOf(randomCustomerId));
-		customerDetails.setUniqueId(String.valueOf(randomUniqueId));
 	}
 	
 	@Override
