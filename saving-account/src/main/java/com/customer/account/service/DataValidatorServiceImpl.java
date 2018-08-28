@@ -70,7 +70,7 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 			logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 			return true;
 		}	
-		throw new ValidationException(configuration, CustomerDetails.class.getSimpleName(), "CustomerId", customerDetails.getCustomerId(), configuration.getIsNull());
+		throw new ValidationException(configuration, CustomerDetails.class.getSimpleName(), "CustomerId", null, configuration.getIsNull());
 	}
 
 	/**
@@ -96,6 +96,6 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 			logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 			return true;
 		}
-		throw new ValidationException(configuration, CustomerDetails.class.getSimpleName(), "CustomerId", customerDetails.getCustomerId(), configuration.getIsNull());
+		throw new ValidationException(configuration, CustomerDetails.class.getSimpleName(), "CustomerId", null, configuration.getIsNull());
 	}
 }
