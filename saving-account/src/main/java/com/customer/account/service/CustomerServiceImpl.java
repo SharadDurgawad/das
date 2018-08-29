@@ -23,7 +23,7 @@ import com.customer.account.utility.CommonUtil;
 
 @Service
 @Transactional
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements BaseService<CustomerDetails> {
 
 	private final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
@@ -40,13 +40,11 @@ public class CustomerServiceImpl implements CustomerService {
 	private BasicConfiguration configuration;
 
 	@Override
-	public CustomerDetails create(Object object) {
+	public CustomerDetails create(CustomerDetails customerDetails) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
-		CustomerDetails customerDetails = null;
 		AccountDetails accountDetails = new AccountDetails();
 		CustomerDetails details = null;
-		customerDetails = (CustomerDetails) object;
-		if (!ObjectUtils.isEmpty(object) && dataValidator.isDataValidForCreate(customerDetails)) {
+		if (!ObjectUtils.isEmpty(customerDetails) && dataValidator.isDataValidForCreate(customerDetails)) {
 			generateAccountDetails(customerDetails, accountDetails);
 			setCustomerFields(customerDetails, accountDetails);
 			if (!customerRepository.existsById(customerDetails.getCustomerId())) {
@@ -86,11 +84,9 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public CustomerDetails update(Object object, Object customerId) {
+	public CustomerDetails update(CustomerDetails customerDetails, String customerId) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		CustomerDetails customerDet;
-		CustomerDetails customerDetails = null;
-		customerDetails = (CustomerDetails) object;
 		if (!ObjectUtils.isEmpty(customerDetails) && customerRepository.existsById((String) customerId)
 				&& dataValidator.isDataValidForUpdate(customerDetails)) {
 			if (customerId.equals(customerDetails.getCustomerId())
@@ -111,9 +107,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public CustomerDetails retrive(Object object) {
+	public CustomerDetails retrive(String customerId) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
-		String customerId = (String) object;
 		List<CustomerDetails> customerDetailsList;
 		if (customerRepository.existsById(customerId)) {
 			customerDetailsList = customCustomerRepository.retriveCustomer(customerId);
@@ -142,11 +137,10 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public CustomerDetails remove(Object object) {
+	public CustomerDetails remove(String customerId) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
 		CustomerDetails customerDetails = null;
-		if (!ObjectUtils.isEmpty(object)) {
-			String customerId = (String) object;
+		if (!ObjectUtils.isEmpty(customerId)) {
 			customerDetails = retrive(customerId);
 			if (dataValidator.isDataValidForUpdate(customerDetails)) {
 				customerDetails.setIsActive(String.valueOf(Boolean.FALSE));

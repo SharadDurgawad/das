@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import com.customer.account.configuration.BasicConfiguration;
 import com.customer.account.exceptions.ExecutionException;
 import com.customer.account.model.CustomerDetails;
-import com.customer.account.service.CustomerService;
+import com.customer.account.service.BaseService;
 
 @SpringBootApplication
 @RunWith(MockitoJUnitRunner.class)
@@ -26,7 +26,7 @@ public class CustomerControllerTest {
 	private CustomerController customerController;
 
 	@Mock
-	private CustomerService accountService;
+	private BaseService accountService;
 	
 	@Mock
 	private BasicConfiguration configuration;

@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 
-import com.customer.account.service.CustomerService;
+import com.customer.account.service.BaseService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,7 +31,7 @@ public class CustomerStaasTest {
     private MockMvc mvc;
 	
 	@MockBean
-	private CustomerService customerService;
+	private BaseService customerService;
 	
 	@Test
     public void createCustomerWithStaasStubs() throws Exception {

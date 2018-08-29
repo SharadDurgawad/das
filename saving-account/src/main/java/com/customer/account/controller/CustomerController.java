@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.customer.account.configuration.BasicConfiguration;
 import com.customer.account.exceptions.ExecutionException;
 import com.customer.account.model.CustomerDetails;
-import com.customer.account.service.CustomerService;
+import com.customer.account.service.BaseService;
 import com.customer.account.utility.CommonUtil;
 
 import io.swagger.annotations.Api;
@@ -36,7 +36,7 @@ public class CustomerController {
 	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
 	@Autowired
-	private CustomerService customerService;
+	private BaseService customerService;
 	
 	@Autowired
 	private BasicConfiguration configuration;

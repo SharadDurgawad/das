@@ -45,11 +45,11 @@ public class CustomerServiceImplTest {
 		getCustomerDetails(customerDetails);
 		getCustomerAddress(addressDetails);
 		customerDetails.setAddressDetails(addressDetails);
-		Object object = customerDetails;
+		//Object object = customerDetails;
 		Mockito.when(dataValidator.isDataValidForCreate(customerDetails)).thenReturn(Boolean.TRUE);
 		Mockito.when(customerRepository.saveAndFlush(customerDetails)).thenReturn(customerDetails);
 		Mockito.when(dataValidator.isIdValidForCreate(customerDetails)).thenReturn(Boolean.TRUE);
-		CustomerDetails response = accountServiceImpl.create(object);
+		CustomerDetails response = accountServiceImpl.create(customerDetails);
 		Assert.assertNotNull(response);
 		
 		
