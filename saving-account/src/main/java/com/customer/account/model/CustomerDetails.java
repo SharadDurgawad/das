@@ -13,8 +13,12 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "customer_details")
+@ApiModel(description = "Class representing a customer details tracked by the application.")
 public class CustomerDetails implements Serializable {
 	/**
 	 * 
@@ -24,47 +28,59 @@ public class CustomerDetails implements Serializable {
 	@Id
 	@Column(name = "customer_id", nullable = false, unique = true)
 	@JsonProperty("customerId")
+    @ApiModelProperty(notes = "Unique identifier of the customer. No two persons can have the same id.", example = "1", position = 0)
 	private String customerId;
 
+    @ApiModelProperty(notes = "Unique identifier of the customer. No two persons can have the same id.", example = "1", position = 0)
 	@Column(name = "unique_id", nullable = false, unique = true)
-	@JsonProperty("uniqueId")
+    @JsonProperty("uniqueId")
 	private String uniqueId;
 
+    @ApiModelProperty(notes = "Unique identifier of the customer. No two persons can have the same id.", example = "1", position = 0)
 	@JsonProperty("accountNumber")
 	@Column(name = "account_number", nullable = false)
 	private String accountNumber;
-
+    
+    @ApiModelProperty(notes = "First Name of the customer.", example = "John", required = true)
 	@JsonProperty("firstName")
 	@Column(name = "cust_first_name", nullable = false)
 	private String custFirstName;
 
+    @ApiModelProperty(notes = "Middle Name of the customer.", example = "Smith", required = false)
 	@JsonProperty("middleName")
 	@Column(name = "cust_middle_name")
 	private String custMiddleName;
 
+    @ApiModelProperty(notes = "Middle Name of the customer.", example = "Doe", required = true)
 	@JsonProperty("lastName")
 	@Column(name = "cust_last_name", nullable = false)
 	private String custLastName;
 
+    @ApiModelProperty(notes = "Date of Birth for the customer.", example = "18/12/1994", required = true)
 	@JsonProperty("dateOfBirth")
 	@Column(name = "date_of_birth", nullable = false)
 	private String dateOfBirth;
 
+    @ApiModelProperty(notes = "Phone number of the customer.", example = "9876543210", required = true)
 	@JsonProperty("phone")
 	@Column(name = "phone_number", nullable = false)
 	private String phoneNumber;
 
+    @ApiModelProperty(notes = "Email Id for the customer.", example = "someone@gmail.com", required = true)
 	@JsonProperty("emailId")
 	@Column(name = "email")
 	private String emailId;
 
+    @ApiModelProperty(notes = "Gender of the customer", example = "Male/Femal", required = true)
 	@JsonProperty("gender")
 	@Column(name = "gender")
 	private String gender;
 
+    @ApiModelProperty(notes = "Active flag for the customer", example = "true/false", required = true)
 	@Column(name = "is_active")
 	private String isActive;
 
+    @ApiModelProperty(notes = "Unique identifier of the person. No two persons can have the same id.", example = "1", required = true)
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumns({ @JoinColumn(referencedColumnName = "customer_id") })
 	private AddressDetails addressDetails;

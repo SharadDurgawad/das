@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class ApplicationUser implements Serializable {
 
@@ -21,7 +23,11 @@ public class ApplicationUser implements Serializable {
 
 	@Id
 	private long id;
+	
+    @ApiModelProperty(notes = "User name for application login", example = "John", position = 0)
 	private String userName;
+    
+    @ApiModelProperty(notes = "Password for application login", example = "Cena", position = 0)
 	private String password;
 
 	public long getId() {

@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table (name = "address_Details")
 public class AddressDetails implements Serializable {
@@ -23,34 +25,42 @@ public class AddressDetails implements Serializable {
 	@JsonProperty("customerId")
 	private String customerId;
 	
+	@ApiModelProperty(notes = "City for the customer.", example = "Pune", required = true)
 	@Column(name = "city")
 	@JsonProperty("city")
 	private String city;
 	
+	@ApiModelProperty(notes = "State for the customer.", example = "Maharashtra", required = true)
 	@Column(name = "state")
 	@JsonProperty("state")
 	private String state;
 	
+	@ApiModelProperty(notes = "Country for the customer.", example = "India", required = true)
 	@Column(name = "country")
 	@JsonProperty("country")
 	private String country;
 	
+	@ApiModelProperty(notes = "Sub-Division for the customer.", example = "Wakad", required = true)
 	@Column(name = "sub_division")
 	@JsonProperty("subDivision")
 	private String subdivision;
 	
+	@ApiModelProperty(notes = "Line1 address for the customer.", example = "1", required = true)
 	@Column(name = "line1")
 	@JsonProperty("line1")
 	private String line1;
 	
+	@ApiModelProperty(notes = "Line2 address for the customer.", example = "1", required = true)
 	@Column(name = "line2")
 	@JsonProperty("line2")
 	private String line2;
 	
+	@ApiModelProperty(notes = "Line3 address for the customer.", example = "1", required = true)
 	@Column(name = "line3")
 	@JsonProperty("line3")
 	private String line3;
 	
+	@ApiModelProperty(notes = "Postal code of address for the customer.", example = "1", required = true)
 	@Column(name = "postal_code")
 	@JsonProperty("postalCode")
     private int postalCode;
