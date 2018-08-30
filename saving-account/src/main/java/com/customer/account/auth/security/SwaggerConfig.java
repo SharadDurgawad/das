@@ -1,8 +1,11 @@
 package com.customer.account.auth.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
+import com.customer.account.utility.ApplicationConstants;
 import com.google.common.base.Predicates;
 
 import springfox.documentation.builders.PathSelectors;
@@ -16,20 +19,23 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
+	
+	@Autowired
+	private Environment environment;
 	  @Bean
 	    public Docket productApi() {
 	        return new Docket(DocumentationType.SWAGGER_2)
-	                .select().apis(RequestHandlerSelectors.basePackage("com.customer.account.controller"))
-	                .paths(Predicates.not(PathSelectors.regex("/api*")))
+	                .select().apis(RequestHandlerSelectors.basePackage(environment.getProperty(ApplicationConstants.BASE_PACKAGE)))
+	                .paths(Predicates.not(PathSelectors.regex(environment.getProperty(ApplicationConstants.REGEX_FOR_SCAN))))
 	                .build()
 	                .apiInfo(metaData())
-	                .tags(new Tag("Customer Api"," Spring Boot Customer Operations for bank account."),
-	                	  new Tag("User Api"," Spring Boot Customer Operations Authentication.")
+	                .tags(new Tag(environment.getProperty(ApplicationConstants.CUSTOMER_API_TAG),environment.getProperty(ApplicationConstants.CUSTOMER_API_TAG_MESSAGE)),
+	                	  new Tag(environment.getProperty(ApplicationConstants.USER_API_TAG),environment.getProperty(ApplicationConstants.USER_API_TAG_MESSAGE))
 	                		);
 	    }
 	  
 	  private ApiInfo metaData() {
-	        return new ApiInfo("Customer Bank Details Spring Boot App", "Spring Boot App for Bank Customer operations", "1.0", "Altimetrik India Pvt. Ltd", new springfox.documentation.service.Contact("Altimetrik India", "www.altimetrik.com", "info@altimetrik.com"), "Apache License Version 2.0", "https://www.apache.org/licenses/LICENSE-2.0");
+	        return new ApiInfo(environment.getProperty(ApplicationConstants.SWAGGER_APPLICATION_INFO), environment.getProperty(ApplicationConstants.SWAGGER_APPLICATION_DESC),environment.getProperty(ApplicationConstants.SWAGGER_APPLICATION_VERSION) , environment.getProperty(ApplicationConstants.SWAGGER_APPLICATION_CREATEDBY), new springfox.documentation.service.Contact(environment.getProperty(ApplicationConstants.SWAGGER_APPLICATION_CONTACT), environment.getProperty(ApplicationConstants.SWAGGER_APPLICATION_WEBSITE), environment.getProperty(ApplicationConstants.SWAGGER_APPLICATION_EMAIL)), environment.getProperty(ApplicationConstants.SWAGGER_APPLICATION_LICENCE_VERSION), environment.getProperty(ApplicationConstants.SWAGGER_APPLICATION_LICENCE_URL));
 	    }
 	
 }
