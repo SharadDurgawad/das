@@ -12,7 +12,7 @@ pipeline {
       steps {
 		echo "Before MVN !!!"
         sh 'mvn -f saving-account/pom.xml clean install'
-        sh 'mvn -f saving-account/pom.xml sonar:sonar -Dsonar.host.url=http://127.0.0.1:9000'
+        sh 'mvn -f saving-account/pom.xml sonar:sonar -Dsonar.host.url=http://127.0.0.1:9000/'
 		echo "`pwd`"
       }
     }
