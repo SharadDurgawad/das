@@ -12,6 +12,7 @@ pipeline {
       steps {
 		echo "Before MVN !!!"
         sh ' mvn -f saving-account/pom.xml clean install'
+        sh 'mvn sonar:sonar'
 		echo "`pwd`"
       }
     }
