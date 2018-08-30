@@ -11,7 +11,8 @@ pipeline {
       }
       steps {
 		echo "Before MVN !!!"
-        sh 'mvn -f saving-account/pom.xml clean install sonar:sonar -Dsonar.host.url=http://192.168.68.173:9000/ -Dsonar.login=admin -Dsonar.password=admin -X'
+        sh 'mvn -f saving-account/pom.xml clean install'
+        sh 'mvn sonar:sonar -Dsonar.host.url=http://192.168.68.173:9000/'
 		echo "`pwd`"
       }
     }
