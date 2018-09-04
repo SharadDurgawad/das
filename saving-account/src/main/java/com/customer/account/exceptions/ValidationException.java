@@ -1,5 +1,7 @@
 package com.customer.account.exceptions;
 
+import java.util.List;
+
 import com.customer.account.configuration.BasicConfiguration;
 
 /**
@@ -29,7 +31,7 @@ public class ValidationException extends RuntimeException {
 	 * @param className Name of the class for which validation failed.
 	 * @param propertyName Name of the property which has invalid value.
 	 * @param value Current value of the property.
-	 * @param reason Reason for failed validataion.
+	 * @param reason Reason for failed validation.
 	 */
 	public ValidationException(BasicConfiguration configuration, String className, String propertyName, String value, String reason) {
 		StringBuilder sb = new StringBuilder();
@@ -40,6 +42,28 @@ public class ValidationException extends RuntimeException {
 		sb.append(configuration.getProperty()).append(propertyName);
 		sb.append(configuration.getValue()).append(value);
 		sb.append(configuration.getReason()).append(reason);
+		sb.append(configuration.getStars());
+		this.message = sb.toString();
+	}
+
+	/**
+	 * 
+	 * @param configuration Instance of BasicConfiguration
+	 * @param className Name of the class for which validation failed.
+	 * @param propertyName Name of the property which has invalid value.
+	 * @param value Current value of the property.
+	 * @param reason Reason for failed validation.
+	 */
+	public ValidationException(BasicConfiguration configuration, String className, List<String> exceptions) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(configuration.getStars());
+		sb.append(configuration.getValidationFailed());
+		sb.append(configuration.getStars());
+		sb.append(configuration.getClassName()).append(className);
+		int count=1;
+		for(String ex:exceptions) {
+			sb.append(configuration.getReason()).append(count++).append(": ").append(ex);
+		}
 		sb.append(configuration.getStars());
 		this.message = sb.toString();
 	}

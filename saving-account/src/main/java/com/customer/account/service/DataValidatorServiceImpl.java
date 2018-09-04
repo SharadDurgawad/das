@@ -43,10 +43,11 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 			// Check the validity of each field.
 			List<String> validationErrors = customerValidator.isCustomerValid(customerDetails, ApplicationConstants.CREATE);
 			if (validationErrors != null && !validationErrors.isEmpty()) {
-				String errors = validationErrors.stream().collect(Collectors.joining(", "));
+				/*String errors = validationErrors.stream().collect(Collectors.joining(", "));
 				customerValidator.emptyValidationErrorList();
 				logger.error(configuration.getAllFieldsNotValid(), errors);
-				throw new ValidationException(errors);
+				throw new ValidationException(errors);*/
+				throw new ValidationException(configuration, CustomerDetails.class.getSimpleName(), validationErrors);
 			}
 			logger.debug(configuration.getAllFieldsValid(), customerDetails.getCustomerId());
 			logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
@@ -61,10 +62,10 @@ public class DataValidatorServiceImpl implements DataValidatorService {
 			// Check the validity of each field.
 			List<String> validationErrors = customerValidator.isIdValidForCreate(customerDetails);
 			if (validationErrors != null && !validationErrors.isEmpty()) {
-				String errors = validationErrors.stream().collect(Collectors.joining(", "));
+				/*String errors = validationErrors.stream().collect(Collectors.joining(", "));
 				customerValidator.emptyValidationErrorList();
-				logger.error(configuration.getAllFieldsNotValid(), errors);
-				throw new ValidationException(errors);
+				logger.error(configuration.getAllFieldsNotValid(), errors);*/
+				throw new ValidationException(configuration, CustomerDetails.class.getSimpleName(), validationErrors);
 			}
 			logger.debug(configuration.getAllFieldsValid(), customerDetails.getCustomerId());
 			logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));

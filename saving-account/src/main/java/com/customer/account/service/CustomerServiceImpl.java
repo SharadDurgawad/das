@@ -16,6 +16,7 @@ import com.customer.account.configuration.BasicConfiguration;
 import com.customer.account.dao.CustomCustomerRepository;
 import com.customer.account.dao.CustomerRepository;
 import com.customer.account.exceptions.ExecutionException;
+import com.customer.account.exceptions.ValidationException;
 import com.customer.account.model.AccountDetails;
 import com.customer.account.model.CustomerDetails;
 import com.customer.account.utility.ApplicationConstants;
@@ -48,12 +49,17 @@ public class CustomerServiceImpl implements BaseService<CustomerDetails> {
 			generateAccountDetails(customerDetails, accountDetails);
 			setCustomerFields(customerDetails, accountDetails);
 			if (!customerRepository.existsById(customerDetails.getCustomerId())) {
-				if (dataValidator.isIdValidForCreate(customerDetails))
-					details = customerRepository.saveAndFlush(customerDetails);
-				else
-					throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),
-							configuration.getInvalidData() + " for " + ApplicationConstants.CUSTOMER_MESSAGE
-									+ ApplicationConstants.SPACE + customerDetails.getCustomerId());
+				try {
+					if (dataValidator.isIdValidForCreate(customerDetails))
+						details = customerRepository.saveAndFlush(customerDetails);
+					else
+						throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),
+								configuration.getInvalidData() + " for " + ApplicationConstants.CUSTOMER_MESSAGE
+										+ ApplicationConstants.SPACE + customerDetails.getCustomerId());
+				} catch (ValidationException ve) {
+					logger.error(ve.getMessage());
+					return null;
+				}
 			} else {
 				throw new ExecutionException(HttpStatus.BAD_REQUEST.value(),
 						ApplicationConstants.CUSTOMER_MESSAGE + ApplicationConstants.SPACE
@@ -86,16 +92,20 @@ public class CustomerServiceImpl implements BaseService<CustomerDetails> {
 	@Override
 	public CustomerDetails update(CustomerDetails customerDetails, String customerId) {
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getStarts()));
-		CustomerDetails customerDet;
+		CustomerDetails customerDet = null;
 		if (!ObjectUtils.isEmpty(customerDetails) && customerRepository.existsById((String) customerId)
 				&& dataValidator.isDataValidForUpdate(customerDetails)) {
-			if (customerId.equals(customerDetails.getCustomerId())
-					&& dataValidator.isIdValidForCreate(customerDetails)) {
-				customerDet = customerRepository.saveAndFlush(customerDetails);
-			} else {
-				throw new ExecutionException(configuration, HttpStatus.BAD_REQUEST.value(),
-						CustomerDetails.class.getSimpleName(), "customerId", customerId.toString(),
-						configuration.getIdMismatched());
+			try {
+				if (customerId.equals(customerDetails.getCustomerId())
+						&& dataValidator.isIdValidForCreate(customerDetails)) {
+					customerDet = customerRepository.saveAndFlush(customerDetails);
+				} else {
+					throw new ExecutionException(configuration, HttpStatus.BAD_REQUEST.value(),
+							CustomerDetails.class.getSimpleName(), "customerId", customerId.toString(),
+							configuration.getIdMismatched());
+				}
+			} catch (ValidationException ve) {
+				logger.error(ve.getMessage());
 			}
 		} else {
 			throw new ExecutionException(configuration, HttpStatus.NOT_FOUND.value(),
@@ -114,8 +124,7 @@ public class CustomerServiceImpl implements BaseService<CustomerDetails> {
 			customerDetailsList = customCustomerRepository.retriveCustomer(customerId);
 		} else {
 			throw new ExecutionException(configuration, HttpStatus.NOT_FOUND.value(),
-					CustomerDetails.class.getSimpleName(), "customerId", customerId,
-					configuration.getNotFound());
+					CustomerDetails.class.getSimpleName(), "customerId", customerId, configuration.getNotFound());
 		}
 		logger.debug(CommonUtil.getCallingClassAndMethodName(configuration.getEnds()));
 		return !CollectionUtils.isEmpty(customerDetailsList) ? customerDetailsList.get(ApplicationConstants.ZERO)

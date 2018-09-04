@@ -16,6 +16,7 @@ import com.customer.account.configuration.BasicConfiguration;
 import com.customer.account.dao.CustomCustomerRepository;
 import com.customer.account.dao.CustomerRepository;
 import com.customer.account.exceptions.ExecutionException;
+import com.customer.account.exceptions.ValidationException;
 import com.customer.account.model.AddressDetails;
 import com.customer.account.model.CustomerDetails;
 
