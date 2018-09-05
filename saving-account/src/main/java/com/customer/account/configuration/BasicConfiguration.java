@@ -26,6 +26,12 @@ public class BasicConfiguration {
 	private String alreadyExists;
 	private String executionException;
 	private String idMismatched;
+	private String validatingUser;
+	private String actualValue;
+	private String invalidDob;
+	private String alphabetOnly;
+	private String nullOrempty;
+	private String userNotFound;
 	
 	public String getClassName() {
 		return className;
@@ -185,6 +191,54 @@ public class BasicConfiguration {
 
 	public void setIdMismatched(String idMismatched) {
 		this.idMismatched = idMismatched;
+	}
+
+	public String getValidatingUser() {
+		return validatingUser;
+	}
+
+	public void setValidatingUser(String validatingUser) {
+		this.validatingUser = validatingUser;
+	}
+
+	public String getUserNotFound() {
+		return userNotFound;
+	}
+
+	public void setUserNotFound(String userNotFound) {
+		this.userNotFound = userNotFound;
+	}
+
+	public String getActualValue() {
+		return actualValue;
+	}
+
+	public void setActualValue(String actualValue) {
+		this.actualValue = actualValue;
+	}
+
+	public String getInvalidDob() {
+		return invalidDob;
+	}
+
+	public void setInvalidDob(String invalidDob) {
+		this.invalidDob = invalidDob;
+	}
+
+	public String getAlphabetOnly() {
+		return alphabetOnly;
+	}
+
+	public void setAlphabetOnly(String alphabetOnly) {
+		this.alphabetOnly = alphabetOnly;
+	}
+
+	public String getNullOrempty() {
+		return nullOrempty;
+	}
+
+	public void setNullOrempty(String nullOrempty) {
+		this.nullOrempty = nullOrempty;
 	}
 
 }

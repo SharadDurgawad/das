@@ -25,7 +25,7 @@ public class CustomerValidatorHelper {
 			CommonUtil.validateField("Customer Id", customer.getCustomerId(), false, validationErrors);
 		}
 		CommonUtil.validateField("Unique Id", customer.getUniqueId(), false, validationErrors);
-		CommonUtil.validateField("First Name ", customer.getCustFirstName(), true, validationErrors);
+		CommonUtil.validateField("First Name", customer.getCustFirstName(), true, validationErrors);
 		CommonUtil.validateField("Middle Name", customer.getCustMiddleName(), true, validationErrors);
 		CommonUtil.validateField("Last Name", customer.getCustLastName(), true, validationErrors);
 		validateEmailId(customer.getEmailId());
