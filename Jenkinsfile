@@ -12,8 +12,14 @@ pipeline {
       steps {
 		echo "Before MVN !!!"
         sh 'mvn -f saving-account/pom.xml clean install'
-        sh 'mvn -f saving-account/pom.xml sonar:sonar -Dsonar.host.url=http://127.0.0.1:9000/'
-		echo "`pwd`"
+      }
+    }
+    stage("SonarQube analysis") {
+    agent any
+    steps {
+     withSonarQubeEnv('SonarQube') {
+         sh '/usr/local/maven/bin/mvn -f  saving-account/pom.xml sonar:sonar'
+        }
       }
     }
 	stage('Docker Build') {
