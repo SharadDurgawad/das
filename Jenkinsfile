@@ -1,7 +1,7 @@
 #!groovy
 
 pipeline {
-  agent none
+  agent any 
   environment {
         IMAGE = "sdurgawad/saving-account"
         REGISTRY = "https://registry.hub.docker.com"
@@ -47,7 +47,7 @@ pipeline {
       }
     }
     
-    stage('test') {
+    stage('Docker Push') {
             steps {
                 script {
                     // https://hub.docker.com/r/tutum/hello-world/
