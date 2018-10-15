@@ -54,12 +54,7 @@ pipeline {
                     def container = image.run('-p 8181')
                     def contport = container.port(8181)
                     println image.id + " container is running at host port, " + contport
-                    def resp = sh(returnStdout: true,
-                                        script: """
-                                                set +x
-						curl -w "%{http_code}" -o /dev/null -s http://\"${contport}\"/api/customers
-                                                """
-                                        ).trim()
+                    def resp = sh 'curl -w "%{http_code}" -o /dev/null -s http://\"${contport}\"/api/customers'
 		    println "Return code of curl, " + resp
                     if ( resp == "000" ) {
                         println "saving-account is alive and kicking!"
