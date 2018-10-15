@@ -57,7 +57,7 @@ pipeline {
                     def resp = sh(returnStdout: true,
                                         script: """
                                                 set +x
-						curl -w "%{http_code}" -o /dev/null -s http://\${contport}/api/customers
+						curl -w "%{http_code}" -o /dev/null -s http://\"${contport}\"/api/customers
                                                 """
                                         ).trim()
 		    println "Return code of curl, " + resp
