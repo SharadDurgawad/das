@@ -60,7 +60,7 @@ pipeline {
 						curl -w "%{http_code}" -o /dev/null -s http://192.168.68.173:${contport}/api/customers
                                                 """
                                         ).trim()
-                    if ( resp == "403" ) {
+                    if ( resp == "404" ) {
                         println "saving-account is alive and kicking!"
                         docker.withRegistry("${env.REGISTRY}", 'docker-hub-entree') {
                             image.push("${GIT_HASH}")
