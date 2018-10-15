@@ -58,7 +58,7 @@ pipeline {
 		    // println "Return code of curl, " + resp
                     if ( "000" == "000" ) {
                         println "saving-account is alive and kicking!"
-                        docker.withRegistry("${env.REGISTRY}", 'docker-hub-entree') {
+                        docker.withRegistry("${env.REGISTRY}", 'dockerHub') {
                             image.push("${GIT_HASH}")
                             if ( "${env.BRANCH_NAME}" == "master" ) {
                                 image.push("LATEST")
