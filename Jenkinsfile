@@ -60,6 +60,7 @@ pipeline {
 						curl -w "%{http_code}" -o /dev/null -s http://192.168.68.173:${contport}/api/customers
                                                 """
                                         ).trim()
+		    println "Return code of curl: " + resp
                     if ( resp == "000" ) {
                         println "saving-account is alive and kicking!"
                         docker.withRegistry("${env.REGISTRY}", 'docker-hub-entree') {
