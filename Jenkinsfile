@@ -57,11 +57,12 @@ pipeline {
                     def resp = sh(returnStdout: true,
                                         script: """
                                                 set +x
-                                                curl -w "%{http_code}" -o /dev/null -s \
-                                                http://\"${contport}\"
+                                                //curl -w "%{http_code}" -o /dev/null -s \
+						curl -w "%{http_code}" -o /dev/null -s http://192.168.68.173:${contport}/api/customers
+                                                //http://\"${contport}\"
                                                 """
                                         ).trim()
-                    if ( resp == "200" ) {
+                    if ( resp == "403" ) {
                         println "saving-account is alive and kicking!"
                         docker.withRegistry("${env.REGISTRY}", 'docker-hub-entree') {
                             image.push("${GIT_HASH}")
