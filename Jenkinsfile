@@ -66,7 +66,7 @@ pipeline {
                         }
                         currentBuild.result = "SUCCESS"
                     } else {
-                        println "Humans are mortals."
+                        println "Docker Build Failed."
                         currentBuild.result = "FAILURE"
                     }
                 }
