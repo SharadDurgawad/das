@@ -28,14 +28,6 @@ pipeline {
         sh 'mvn -f saving-account/pom.xml clean install'
       }
     }
-    stage("SonarQube analysis") {
-    agent any
-    steps {
-     withSonarQubeEnv('SonarQube') {
-         sh '/usr/local/maven/bin/mvn -f  saving-account/pom.xml sonar:sonar'
-        }
-      }
-    }
     stage('Docker Build') {
       agent any
       steps {
