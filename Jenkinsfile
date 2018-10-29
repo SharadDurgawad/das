@@ -32,6 +32,7 @@ pipeline {
     agent any
     steps {
      withSonarQubeEnv('SonarQube') {
+	 sh 'curl http://192.168.68.173:9000/'
          sh '/usr/local/maven/bin/mvn -f  saving-account/pom.xml sonar:sonar'
         }
       }
