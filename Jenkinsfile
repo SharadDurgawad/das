@@ -25,7 +25,7 @@ pipeline {
       }
       steps {
 		echo "Before MVN !!!"
-        sh 'mvn -f saving-account/pom.xml clean install'
+        //sh 'mvn -f saving-account/pom.xml clean install'
       }
     }
     stage("SonarQube analysis") {
